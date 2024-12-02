@@ -1,18 +1,12 @@
-export const getDiscordMemberCount = async (discordLink: string) => {
-  const inviteId = discordLink.split("/")[discordLink.split("/").length - 1]
-  const res = await fetch(
+import { memoize } from "@fxts/core"
+
+export const getDiscordInviteInfo = memoize((inviteId: string) => {
+  return fetch(
     `https://discord.com/api/invites/${inviteId}?${new URLSearchParams({
       with_counts: "true",
     })}`,
   ).then<R>((res) => res.json())
-
-  const { approximate_member_count, approximate_presence_count } = res
-
-  return {
-    memberCount: approximate_member_count,
-    onlineCount: approximate_presence_count,
-  }
-}
+})
 
 export interface R {
   type: number
