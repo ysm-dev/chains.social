@@ -11,10 +11,10 @@ describe("getDiscordInviteInfo function format tests", () => {
     const response = await getDiscordInviteInfo(inviteId)
 
     const validationResult = getDiscordInviteInfoSchema.safeParse(response)
-
-    expect(validationResult.success).toBe(true)
     if (!validationResult.success) {
       console.error("Validation errors:", validationResult.error.errors)
     }
+
+    expect(validationResult.success).toBe(true)
   })
 })
