@@ -7,7 +7,7 @@
   },
   "packageManager": "bun@1.1.38",
   "scripts": {
-    "dev": "",
+    "dev": "bun src/main.ts",
     "clean": "rm -rf node_modules .next out bun.lockb",
     "check": "taze major",
     "bump": "taze major -w -i"
@@ -18,9 +18,7 @@
     "@types/bun": "^1.1.14",
     "dotenv": "^16.4.5",
     "taze": "^0.18.0",
-    "typescript": "^5.7.2"
-  },
-  "dependencies": {
+    "typescript": "^5.7.2",
     "unstorage": "^1.13.1"
   }
 }
