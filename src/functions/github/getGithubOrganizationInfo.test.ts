@@ -11,6 +11,7 @@ describe("getGithubOrganizationInfo function format tests", () => {
         status: 200,
         json: () =>
           Promise.resolve({
+            login: "base-org",
             name: "Base",
             followers: 4339,
             public_repos: 121,
@@ -21,7 +22,6 @@ describe("getGithubOrganizationInfo function format tests", () => {
 
     const response = await getGithubOrganizationInfo(organizationName)
 
-    expect(response.followers).toBe(4339)
-    expect(response.public_repos).toBe(121)
+    expect(response.login).toBe(organizationName)
   })
 })

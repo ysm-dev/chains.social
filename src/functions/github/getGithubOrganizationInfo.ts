@@ -11,11 +11,12 @@ export const getGithubOrganizationInfo = memoize(
       throw new Error(validation.error.errors.join("\n"))
     }
 
-    return result
+    return validation.data
   },
 )
 
 export const getGithubOrganizationInfoSchema = z.object({
+  login: z.string(),
   name: z.string(),
   public_repos: z.number(),
   followers: z.number(),
