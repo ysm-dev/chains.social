@@ -34,5 +34,5 @@ jobs:
             git config user.name "Actions"
             git pull --rebase --autostash
             git add .
-            git commit -m "Update"
+            git commit -m "Update data"
             git push
