@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { createStorage } from "unstorage"
 import fsLiteDriver from "unstorage/drivers/fs-lite"
 

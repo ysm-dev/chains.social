@@ -1,4 +1,4 @@
-import { getDiscordInviteInfo } from "@/functions/discord/getDiscordMemberCount"
+import { getDiscordInviteInfo } from "@/functions/discord/getDiscordInviteInfo"
 
 export const getOnlineCountFromDiscord = async (discordLink: string) => {
   const inviteId = discordLink.split("/")[discordLink.split("/").length - 1]

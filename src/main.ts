@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import "dotenv/config"
 
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
