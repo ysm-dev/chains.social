@@ -1,0 +1,38 @@
+name: Cron 1
+
+on:
+  schedule:
+    # twice a day at 00:00 and 12:00 UTC
+    - cron: "0 0,12 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - uses: oven-sh/setup-bun@main
+        with:
+          bun-version: latest
+          bun-download-url: "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip"
+
+      - run: bun i -f
+      - run: bun tsx run.ts
+
+      - name: Commit
+        uses: nick-fields/retry@master
+        with:
+          timeout_minutes: 60
+          max_attempts: 10000
+          command: |
+            git config user.email "actions@github.com"
+            git config user.name "Actions"
+            git pull --rebase --autostash
+            git add .
+            git commit -m "Update"
+            git push
