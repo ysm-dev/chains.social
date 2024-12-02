@@ -22,7 +22,7 @@ jobs:
           bun-download-url: "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip"
 
       - run: bun i -f
-      - run: bun tsx run.ts
+      - run: bun src/main.ts
 
       - name: Commit
         uses: nick-fields/retry@master
