@@ -1,5 +1,8 @@
+import "dotenv/config"
+
 import { getDiscordMemberCount } from "@/functions/getDiscordMemberCount"
 import { storage } from "@/lib/unstorage"
+import { isLocal } from "@/utils/isLocal"
 
 async function main() {
   const discordLink = "https://discord.gg/buildonbase"
@@ -8,7 +11,9 @@ async function main() {
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
-  await storage.set(`base/${Date.now()}/discord.json`, {
+  const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/discord.json`
+
+  await storage.set(folder, {
     memberCount,
     onlineCount,
   })
