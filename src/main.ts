@@ -29,19 +29,17 @@ async function main() {
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
-  const timestamp = Date.now()
+  const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/data.json`
 
-  const discordFolder = `${isLocal() ? "tmp" : "base"}/${timestamp}/discord.json`
-
-  await storage.set(discordFolder, {
-    memberCount,
-    onlineCount,
-  })
-
-  const githubFolder = `${isLocal() ? "tmp" : "base"}/${timestamp}/github.json`
-  await storage.set(githubFolder, {
-    followerCount,
-    publicRepositoryCount,
+  await storage.set(folder, {
+    discord: {
+      memberCount,
+      onlineCount,
+    },
+    github: {
+      followerCount,
+      publicRepositoryCount,
+    },
   })
 }
 
