@@ -7,6 +7,9 @@ import { getContributorCountFromGithub } from "@/functions/getContributorCountFr
 import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
 import { getForkCountFromGithub } from "@/functions/getForkCountFromGithub"
 import { getLastCommitDateFromGithub } from "@/functions/getLastCommitDateFromGithub"
+import { getLastReleasedDateFromNpm } from "@/functions/getLastReleasedDateFromNpm"
+import { getLastReleasedVersionromNpm } from "@/functions/getLastReleasedVersionFromNpm"
+import { getLastWeekDownloadsFromNpm } from "@/functions/getLastWeekDownloadsFromNpm"
 import { getLatestReleaseDateFromGithub } from "@/functions/getLatestReleaseDateFromGithub"
 import { getLatestReleaseNameFromGithub } from "@/functions/getLatestReleaseNameFromGithub"
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
@@ -25,6 +28,7 @@ async function main() {
     discoardLink: "https://discord.gg/buildonbase",
     githubOrganizationLink: "https://github.com/base-org",
     githubRepositoryLink: "https://github.com/base-org/node",
+    npmLink: "https://www.npmjs.com/package/@solana/web3.js",
   }
 
   const [
@@ -41,6 +45,7 @@ async function main() {
     totalIssueCount,
     openIssueCount,
     closedIssueCount,
+    lastWeekDownloads,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -56,17 +61,26 @@ async function main() {
       getTotalIssueCountFromGithub(data.githubRepositoryLink),
       getOpenIssueCountFromGithub(data.githubRepositoryLink),
       getClosedIssueCountFromGithub(data.githubRepositoryLink),
+      getLastWeekDownloadsFromNpm(data.npmLink),
     ],
     toAsync,
     concurrent(10000),
     toArray,
   )
 
-  const [lastCommitDate, latestReleaseDate, latestReleaseName] = await pipe(
+  const [
+    lastCommitDate,
+    latestReleaseDate,
+    latestReleaseName,
+    lastReleasedDate,
+    lastReleasedVersion,
+  ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
       getLatestReleaseDateFromGithub(data.githubRepositoryLink),
       getLatestReleaseNameFromGithub(data.githubRepositoryLink),
+      getLastReleasedDateFromNpm(data.npmLink),
+      getLastReleasedVersionromNpm(data.npmLink),
     ],
     toAsync,
     concurrent(10000),
@@ -98,6 +112,11 @@ async function main() {
       lastCommitDate,
       latestReleaseDate,
       latestReleaseName,
+    },
+    npm: {
+      lastWeekDownloads,
+      lastReleasedDate,
+      lastReleasedVersion,
     },
   })
 }
