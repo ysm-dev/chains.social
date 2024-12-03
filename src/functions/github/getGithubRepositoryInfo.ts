@@ -18,6 +18,7 @@ export const getGithubOrganizationInfoSchema = z.object({
   forks_count: z.number(),
   subscribers_count: z.number(),
   open_issues_count: z.number(),
+  default_branch: z.string(),
 })
 
 export type GetDiscordInviteInfoResponse = z.infer<

@@ -6,6 +6,9 @@ import { getCommitByUserCountFromGithub } from "@/functions/getCommitByUserCount
 import { getContributorCountFromGithub } from "@/functions/getContributorCountFromGithub"
 import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
 import { getForkCountFromGithub } from "@/functions/getForkCountFromGithub"
+import { getLastCommitDateFromGithub } from "@/functions/getLastCommitDateFromGithub"
+import { getLatestReleaseDateFromGithub } from "@/functions/getLatestReleaseDateFromGithub"
+import { getLatestReleaseNameFromGithub } from "@/functions/getLatestReleaseNameFromGithub"
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
 import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord"
 import { getOpenIssueCountFromGithub } from "@/functions/getOpenIssueCountFromGiyhub"
@@ -59,6 +62,17 @@ async function main() {
     toArray,
   )
 
+  const [lastCommitDate, latestReleaseDate, latestReleaseName] = await pipe(
+    [
+      getLastCommitDateFromGithub(data.githubRepositoryLink),
+      getLatestReleaseDateFromGithub(data.githubRepositoryLink),
+      getLatestReleaseNameFromGithub(data.githubRepositoryLink),
+    ],
+    toAsync,
+    concurrent(10000),
+    toArray,
+  )
+
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
@@ -81,6 +95,9 @@ async function main() {
       totalIssueCount,
       openIssueCount,
       closedIssueCount,
+      lastCommitDate,
+      latestReleaseDate,
+      latestReleaseName,
     },
   })
 }
