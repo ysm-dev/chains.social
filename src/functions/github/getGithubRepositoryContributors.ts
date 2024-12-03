@@ -47,7 +47,15 @@ export const getGithubRepositoryContributors = memoize(
       0,
     )
 
-    return { commitCount, contributorCount }
+    const botCommitCount = contributors
+      .filter((v) => !v.login)
+      .reduce((acc, contributor) => acc + contributor.contributions, 0)
+
+    return {
+      commitCount,
+      contributorCount,
+      commitWithoutBotCount: commitCount - botCommitCount,
+    }
   },
 )
 
