@@ -6,6 +6,7 @@ import { getCommitByUserCountFromGithub } from "@/functions/getCommitByUserCount
 import { getContributorCountFromGithub } from "@/functions/getContributorCountFromGithub"
 import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
 import { getForkCountFromGithub } from "@/functions/getForkCountFromGithub"
+import { getLastCommitDateFromGithub } from "@/functions/getLastCommitDateFromGithub"
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
 import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord"
 import { getOpenIssueCountFromGithub } from "@/functions/getOpenIssueCountFromGiyhub"
@@ -59,6 +60,10 @@ async function main() {
     toArray,
   )
 
+  const lastCommitDate = await getLastCommitDateFromGithub(
+    data.githubRepositoryLink,
+  )
+
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
@@ -81,6 +86,7 @@ async function main() {
       totalIssueCount,
       openIssueCount,
       closedIssueCount,
+      lastCommitDate,
     },
   })
 }
