@@ -3,7 +3,7 @@ import { z } from "zod"
 
 export const getGithubOrganizationInfo = memoize(
   async (organizationName: string) => {
-    const res = await fetch(` https://api.github.com/orgs/${organizationName}`)
+    const res = await fetch(`https://api.github.com/orgs/${organizationName}`)
     const result: GetDiscordInviteInfoResponse = await res.json()
 
     const validation = getGithubOrganizationInfoSchema.safeParse(result)

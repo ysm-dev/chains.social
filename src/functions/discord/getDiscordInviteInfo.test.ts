@@ -1,7 +1,4 @@
-import {
-  getDiscordInviteInfo,
-  getDiscordInviteInfoSchema,
-} from "@/functions/discord/getDiscordInviteInfo"
+import { getDiscordInviteInfo } from "@/functions/discord/getDiscordInviteInfo"
 import { describe, expect, it, vi } from "vitest"
 
 describe("getDiscordInviteInfo function format tests", () => {

@@ -1,5 +1,4 @@
 import { getGithubOrganizationInfo } from "@/functions/github/getGithubOrganizationInfo"
-import { isLocal } from "@/utils/isLocal"
 import { describe, expect, it, vi } from "vitest"
 
 describe("getGithubOrganizationInfo function format tests", () => {
