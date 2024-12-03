@@ -1,4 +1,3 @@
-import { getDiscordInviteInfo } from "@/functions/discord/getDiscordInviteInfo"
 import { getGithubOrganizationInfo } from "@/functions/github/getGithubOrganizationInfo"
 import { getLastSegment } from "@/utils/getLastSegment"
 
