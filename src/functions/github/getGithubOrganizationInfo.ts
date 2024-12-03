@@ -6,12 +6,7 @@ export const getGithubOrganizationInfo = memoize(
     const res = await fetch(`https://api.github.com/orgs/${organizationName}`)
     const result: GetDiscordInviteInfoResponse = await res.json()
 
-    const validation = getGithubOrganizationInfoSchema.safeParse(result)
-    if (!validation.success) {
-      throw new Error(validation.error.errors.join("\n"))
-    }
-
-    return validation.data
+    return getGithubOrganizationInfoSchema.parse(result)
   },
 )
 

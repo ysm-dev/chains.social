@@ -8,12 +8,7 @@ export const getDiscordInviteInfo = memoize(async (inviteId: string) => {
     })}`,
   ).then<GetDiscordInviteInfoResponse>((res) => res.json())
 
-  const validation = getDiscordInviteInfoSchema.safeParse(response)
-  if (!validation.success) {
-    throw new Error(validation.error.errors.join("\n"))
-  }
-
-  return validation.data
+  return getDiscordInviteInfoSchema.parse(response)
 })
 
 export const getDiscordInviteInfoSchema = z.object({
