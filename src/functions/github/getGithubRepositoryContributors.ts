@@ -1,57 +1,49 @@
-import { memoize } from "@fxts/core"
+import {
+  flat,
+  map,
+  memoize,
+  pipe,
+  range,
+  takeUntil,
+  toArray,
+  toAsync,
+} from "@fxts/core"
 import { z } from "zod"
-
-async function* fetchAllGithubRepositoryContributors(
-  organizationName: string,
-  repositoryName: string,
-) {
-  let page = 1
-  const limit = 100
-
-  while (true) {
-    const response = await fetch(
-      `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors?${new URLSearchParams(
-        {
-          per_page: limit.toString(),
-          page: page.toString(),
-          anon: "true",
-        },
-      )}`,
-    ).then((res) => res.json())
-
-    yield getGithubRepositoryContributorsSchema.parse(response)
-
-    if (response.length < limit) {
-      break
-    }
-
-    page++
-  }
-}
 
 export const getGithubRepositoryContributors = memoize(
   async (organizationName: string, repositoryName: string) => {
-    let contributors: GetGithubRepositoryContributorsResponse = []
-
-    for await (const pageData of fetchAllGithubRepositoryContributors(
-      organizationName,
-      repositoryName,
-    )) {
-      contributors.push(...pageData)
-    }
+    const contributors = await pipe(
+      range(Infinity),
+      toAsync,
+      map(async (page) =>
+        fetch(
+          `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors?${new URLSearchParams(
+            {
+              per_page: "100",
+              page: page.toString(),
+              anon: "true",
+            },
+          )}`,
+        ).then((res) => res.json()),
+      ),
+      map((v) => getGithubRepositoryContributorsSchema.parse(v)),
+      takeUntil((v) => v.length < 100),
+      flat,
+      toArray,
+    )
 
     const commitCount = contributors.reduce(
       (acc, contributor) => acc + contributor.contributions,
       0,
     )
 
-    const botCommitCount = contributors
-      .filter((v) => !v.login)
+    const userCommitCount = contributors
+      .filter((v) => v.type === "User")
       .reduce((acc, contributor) => acc + contributor.contributions, 0)
 
     return {
-      commitByUserCount: commitCount - botCommitCount,
-      commitByBotCount: botCommitCount,
+      commitByUserCount: userCommitCount,
+      commitByBotCount: commitCount - userCommitCount,
       contributorCount: contributors.length,
     }
   },
@@ -60,7 +52,7 @@ export const getGithubRepositoryContributors = memoize(
 export const getGithubRepositoryContributorsSchema = z.array(
   z.object({
     login: z.string().optional(),
-    type: z.string(),
+    type: z.string().optional(),
     contributions: z.number(),
   }),
 )

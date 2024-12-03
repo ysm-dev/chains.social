@@ -1,44 +1,36 @@
-import { memoize } from "@fxts/core"
+import {
+  flat,
+  map,
+  memoize,
+  pipe,
+  range,
+  takeUntil,
+  toArray,
+  toAsync,
+} from "@fxts/core"
 import { z } from "zod"
-
-async function* fetchAllGithubIssues(
-  organizationName: string,
-  repositoryName: string,
-) {
-  let page = 1
-  const limit = 100
-
-  while (true) {
-    const response = await fetch(
-      `https://api.github.com/repos/${organizationName}/${repositoryName}/issues?${new URLSearchParams(
-        {
-          per_page: limit.toString(),
-          page: page.toString(),
-          state: "all",
-        },
-      )}`,
-    ).then((res) => res.json())
-
-    yield getGithubIssuesSchema.parse(response)
-
-    if (response.length < limit) {
-      break
-    }
-
-    page++
-  }
-}
 
 export const getGithubRepositoryIssues = memoize(
   async (organizationName: string, repositoryName: string) => {
-    let issues: GetGithubIssuesResponse = []
-
-    for await (const pageData of fetchAllGithubIssues(
-      organizationName,
-      repositoryName,
-    )) {
-      issues.push(...pageData)
-    }
+    const issues = await pipe(
+      range(Infinity),
+      toAsync,
+      map(async (page) =>
+        fetch(
+          `https://api.github.com/repos/${organizationName}/${repositoryName}/issues?${new URLSearchParams(
+            {
+              per_page: "100",
+              page: page.toString(),
+              state: "all",
+            },
+          )}`,
+        ).then((res) => res.json()),
+      ),
+      map((v) => getGithubIssuesSchema.parse(v)),
+      takeUntil((v) => v.length < 100),
+      flat,
+      toArray,
+    )
 
     return {
       totalIssueCount: issues.length,

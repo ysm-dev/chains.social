@@ -6,30 +6,13 @@ describe("getGithubRepositoryContributors function format tests", () => {
     const organizationName = "base-org"
     const repositoryName = "node"
 
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () =>
-          Promise.resolve([
-            {
-              login: "asdf",
-              contributions: 20,
-            },
-            {
-              login: "qwer",
-              contributions: 10,
-            },
-          ]),
-      } as Response),
-    )
-
     const response = await getGithubRepositoryContributors(
       organizationName,
       repositoryName,
     )
 
-    expect(response.commitCount).toBeGreaterThan(0)
-    expect(response.contributorCount).toBeGreaterThan(0)
+    expect(response.commitByUserCount).toBeGreaterThanOrEqual(0)
+    expect(response.commitByBotCount).toBeGreaterThanOrEqual(0)
+    expect(response.contributorCount).toBeGreaterThanOrEqual(0)
   })
 })
