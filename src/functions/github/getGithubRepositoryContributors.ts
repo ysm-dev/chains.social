@@ -10,7 +10,7 @@ async function* fetchAllGithubRepositoryContributors(
 
   while (true) {
     const response = await fetch(
-      ` https://api.github.com/repos/${organizationName}/${repositoryName}/contributors?${new URLSearchParams(
+      `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors?${new URLSearchParams(
         {
           per_page: limit.toString(),
           page: page.toString(),
