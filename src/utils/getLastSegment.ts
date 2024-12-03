@@ -1,3 +1,3 @@
-export const getLastSegment = (input: string, length = 1) => {
-  return input.split("/").slice(-length)
+export const getLastSegment = (input: string) => {
+  return input.split("/").at(-1)!
 }

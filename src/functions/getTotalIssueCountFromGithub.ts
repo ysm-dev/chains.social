@@ -4,10 +4,9 @@ import { getLastSegment } from "@/utils/getLastSegment"
 export const getTotalIssueCountFromGithub = async (
   githubRepositoryLink: string,
 ) => {
-  const [organizationName, repositoryName] = getLastSegment(
-    githubRepositoryLink,
-    2,
-  )
+  const [repositoryName, organizationName] = githubRepositoryLink
+    .split("/")
+    .reverse()
 
   const response = await getGithubRepositoryIssues(
     organizationName,

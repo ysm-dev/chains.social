@@ -2,10 +2,9 @@ import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryI
 import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getForkCountFromGithub = async (githubRepositoryLink: string) => {
-  const [organizationName, repositoryName] = getLastSegment(
-    githubRepositoryLink,
-    2,
-  )
+  const [repositoryName, organizationName] = githubRepositoryLink
+    .split("/")
+    .reverse()
 
   const response = await getGithubRepositoryInfo(
     organizationName,
