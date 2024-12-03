@@ -1,6 +1,6 @@
 import { getClosedIssueCountFromGithub } from "@/functions/getClosedIssueCountFromGithub"
-import { getCommitCountFromGithub } from "@/functions/getCommitCountFromGithub"
-import { getCommitWithoutBotCountFromGithub } from "@/functions/getCommitWithoutBotCountFromGithub"
+import { getCommitByBotCountFromGithub } from "@/functions/getCommitByBotCountFromGithub"
+import { getCommitByUserCountFromGithub } from "@/functions/getCommitByUserCountFromGithub"
 import { getContributorCountFromGithub } from "@/functions/getContributorCountFromGithub"
 import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
 import { getForkCountFromGithub } from "@/functions/getForkCountFromGithub"
@@ -31,8 +31,8 @@ async function main() {
     starCount,
     forkCount,
     watcherCount,
-    commitCount,
-    commitWithoutBotCount,
+    commitByUserCount,
+    commitByBotCount,
     contributorCount,
     totalIssueCount,
     openIssueCount,
@@ -46,8 +46,8 @@ async function main() {
       getStarCountFromGithub(data.githubRepositoryLink),
       getForkCountFromGithub(data.githubRepositoryLink),
       getWatcherCountFromGithub(data.githubRepositoryLink),
-      getCommitCountFromGithub(data.githubRepositoryLink),
-      getCommitWithoutBotCountFromGithub(data.githubRepositoryLink),
+      getCommitByUserCountFromGithub(data.githubRepositoryLink),
+      getCommitByBotCountFromGithub(data.githubRepositoryLink),
       getContributorCountFromGithub(data.githubRepositoryLink),
       getTotalIssueCountFromGithub(data.githubRepositoryLink),
       getOpenIssueCountFromGithub(data.githubRepositoryLink),
@@ -74,8 +74,8 @@ async function main() {
       starCount,
       forkCount,
       watcherCount,
-      commitCount,
-      commitWithoutBotCount,
+      commitByUserCount,
+      commitByBotCount,
       contributorCount,
       totalIssueCount,
       openIssueCount,

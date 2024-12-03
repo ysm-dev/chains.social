@@ -1,7 +1,7 @@
 import { getGithubRepositoryContributors } from "@/functions/github/getGithubRepositoryContributors"
 import { getLastSegment } from "@/utils/getLastSegment"
 
-export const getCommitWithoutBotCountFromGithub = async (
+export const getCommitByBotCountFromGithub = async (
   githubRepositoryLink: string,
 ) => {
   const [organizationName, repositoryName] = getLastSegment(
@@ -14,7 +14,7 @@ export const getCommitWithoutBotCountFromGithub = async (
     repositoryName,
   )
 
-  const { commitWithoutBotCount } = response
+  const { commitByBotCount } = response
 
-  return commitWithoutBotCount
+  return commitByBotCount
 }

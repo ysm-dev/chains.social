@@ -40,8 +40,6 @@ export const getGithubRepositoryContributors = memoize(
       contributors.push(...pageData)
     }
 
-    const contributorCount = contributors.length
-
     const commitCount = contributors.reduce(
       (acc, contributor) => acc + contributor.contributions,
       0,
@@ -52,9 +50,9 @@ export const getGithubRepositoryContributors = memoize(
       .reduce((acc, contributor) => acc + contributor.contributions, 0)
 
     return {
-      commitCount,
-      contributorCount,
-      commitWithoutBotCount: commitCount - botCommitCount,
+      commitByUserCount: commitCount - botCommitCount,
+      commitByBotCount: botCommitCount,
+      contributorCount: contributors.length,
     }
   },
 )
@@ -62,6 +60,7 @@ export const getGithubRepositoryContributors = memoize(
 export const getGithubRepositoryContributorsSchema = z.array(
   z.object({
     login: z.string().optional(),
+    type: z.string(),
     contributions: z.number(),
   }),
 )
