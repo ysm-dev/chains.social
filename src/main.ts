@@ -1,3 +1,5 @@
+import "dotenv/config"
+
 import { getClosedIssueCountFromGithub } from "@/functions/getClosedIssueCountFromGithub"
 import { getCommitByBotCountFromGithub } from "@/functions/getCommitByBotCountFromGithub"
 import { getCommitByUserCountFromGithub } from "@/functions/getCommitByUserCountFromGithub"
@@ -14,7 +16,6 @@ import { getWatcherCountFromGithub } from "@/functions/getWatcherCountFromGithub
 import { storage } from "@/lib/unstorage"
 import { isLocal } from "@/utils/isLocal"
 import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
-import "dotenv/config"
 
 async function main() {
   const data = {
