@@ -12,7 +12,7 @@
           "fix": "unsafe"
         },
         "noUselessElse": "off",
-        "noNonNullAssertion": "warn",
+        "noNonNullAssertion": "off",
         "useConst": "off",
         "useNumberNamespace": "off",
         "useSelfClosingElements": "off",

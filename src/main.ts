@@ -1,32 +1,45 @@
-import "dotenv/config"
-
+import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
 import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord"
+import { getPublicRepositoryCountFromGithub } from "@/functions/getPublicRepositoryCountFromGithub"
 import { storage } from "@/lib/unstorage"
 import { isLocal } from "@/utils/isLocal"
 import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
+import "dotenv/config"
 
 async function main() {
-  const discordLink = "https://discord.gg/buildonbase"
+  const data = {
+    discoardLink: "https://discord.gg/buildonbase",
+    githubOrganizationLink: "https://github.com/base-org",
+  }
 
-  const [memberCount, onlineCount] = await pipe(
-    [
-      getMemberCountFromDiscord(discordLink),
-      getOnlineCountFromDiscord(discordLink),
-    ],
-    toAsync,
-    concurrent(10000),
-    toArray,
-  )
+  const [memberCount, onlineCount, followerCount, publicRepositoryCount] =
+    await pipe(
+      [
+        getMemberCountFromDiscord(data.discoardLink),
+        getOnlineCountFromDiscord(data.discoardLink),
+        getFollowerCountFromGithub(data.githubOrganizationLink),
+        getPublicRepositoryCountFromGithub(data.githubOrganizationLink),
+      ],
+      toAsync,
+      concurrent(10000),
+      toArray,
+    )
 
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
-  const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/discord.json`
+  const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/data.json`
 
   await storage.set(folder, {
-    memberCount,
-    onlineCount,
+    discord: {
+      memberCount,
+      onlineCount,
+    },
+    github: {
+      followerCount,
+      publicRepositoryCount,
+    },
   })
 }
 
