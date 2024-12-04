@@ -7,10 +7,10 @@ describe.concurrent("getGoogleSearchResult", () => {
 
     const result = await getGoogleSearchResult(query)
 
-    const channel = `https://www.youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA`
+    const channel = `https://www.youtube.com/@SolanaFndn`
 
     expect(result.includes(channel)).toEqual(true)
-    expect(result.length).toEqual(10)
+    expect(result.length).toEqual(99)
   })
 
   it("site:youtube.com Ethereum", async () => {
@@ -21,6 +21,6 @@ describe.concurrent("getGoogleSearchResult", () => {
     const channel = `https://www.youtube.com/@EthereumProtocol`
 
     expect(result.includes(channel)).toEqual(true)
-    expect(result.length).toEqual(10)
+    expect(result.length).toEqual(99)
   })
 })

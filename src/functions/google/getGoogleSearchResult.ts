@@ -19,7 +19,7 @@ const browserContext: BrowserContextOptions = {
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
 }
 
-export const getGoogleSearchResult = async (query: string) => {
+export const getGoogleSearchResult = async (query: string, limit = 100) => {
   const chromium = chrome.use(StealthPlugin())
 
   const browser = await chromium.launch({
@@ -32,7 +32,17 @@ export const getGoogleSearchResult = async (query: string) => {
 
   const page = await context.newPage()
 
-  await page.goto(`https://www.google.com/search?q=${query}`)
+  await page.goto(
+    `https://www.google.com/search?${new URLSearchParams({
+      q: query,
+      // Language to search from
+      hl: "en",
+      // Country to search from
+      gl: "us",
+      // Number of results to show
+      num: `${limit}`,
+    })}`,
+  )
 
   await page.waitForSelector("h3")
 
@@ -56,7 +66,7 @@ export const getGoogleSearchResult = async (query: string) => {
     toArray,
   )
 
-  console.log(r)
+  // console.log(r)
 
   return r
 }
