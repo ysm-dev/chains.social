@@ -2,10 +2,7 @@ import { getNpmPackageInfo } from "@/functions/npm/getNpmPackageInfo"
 import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getLastReleasedVersionromNpm = async (npmLink: string) => {
-  const packageName = npmLink.split("https://www.npmjs.com/package/").pop()
-  if (!packageName) {
-    return null
-  }
+  const packageName = npmLink.replace("https://www.npmjs.com/package/", "")
 
   const data = await getNpmPackageInfo(packageName)
 
