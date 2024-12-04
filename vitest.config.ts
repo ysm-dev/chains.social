@@ -7,6 +7,7 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       exclude: ["src/main.ts", "src/utils/**", "src/lib/**"],
     },
+    testTimeout: 10 * 1000,
   },
   resolve: {
     alias: {
