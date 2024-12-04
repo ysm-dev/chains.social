@@ -46,7 +46,7 @@ export const getGoogleSearchResult = async (query: string) => {
 
   await browser.close()
 
-  return pipe(
+  const r = pipe(
     results,
     filter(URL.canParse),
     map((url) => new URL(url).searchParams.get("q")!),
@@ -55,4 +55,8 @@ export const getGoogleSearchResult = async (query: string) => {
     uniq,
     toArray,
   )
+
+  console.log(r)
+
+  return r
 }
