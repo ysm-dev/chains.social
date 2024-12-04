@@ -10,6 +10,7 @@ import { getLastCommitDateFromGithub } from "@/functions/getLastCommitDateFromGi
 import { getLastReleasedDateFromNpm } from "@/functions/getLastReleasedDateFromNpm"
 import { getLastReleasedVersionromNpm } from "@/functions/getLastReleasedVersionFromNpm"
 import { getLastWeekDownloadsFromNpm } from "@/functions/getLastWeekDownloadsFromNpm"
+import { getLastVideoFromYoutube } from "@/functions/getLastVideoFromYoutube"
 import { getLatestReleaseDateFromGithub } from "@/functions/getLatestReleaseDateFromGithub"
 import { getLatestReleaseNameFromGithub } from "@/functions/getLatestReleaseNameFromGithub"
 import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
@@ -17,7 +18,10 @@ import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord
 import { getOpenIssueCountFromGithub } from "@/functions/getOpenIssueCountFromGiyhub"
 import { getPublicRepositoryCountFromGithub } from "@/functions/getPublicRepositoryCountFromGithub"
 import { getStarCountFromGithub } from "@/functions/getStarCountFromGithub"
+import { getSubscriberCountFromYoutube } from "@/functions/getSubscriberCountFromYoutube"
 import { getTotalIssueCountFromGithub } from "@/functions/getTotalIssueCountFromGithub"
+import { getVideoCountFromYoutube } from "@/functions/getVideoCountFromYoutube"
+import { getViewCountFromYoutube } from "@/functions/getViewCountFromYoutube"
 import { getWatcherCountFromGithub } from "@/functions/getWatcherCountFromGithub"
 import { storage } from "@/lib/unstorage"
 import { isLocal } from "@/utils/isLocal"
@@ -29,6 +33,7 @@ async function main() {
     githubOrganizationLink: "https://github.com/base-org",
     githubRepositoryLink: "https://github.com/base-org/node",
     npmLink: "https://www.npmjs.com/package/@solana/web3.js",
+    youtubeLink: "https://youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA",
   }
 
   const [
@@ -46,6 +51,9 @@ async function main() {
     openIssueCount,
     closedIssueCount,
     lastWeekDownloads,
+    viewCount,
+    videoCount,
+    subscriberCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -62,6 +70,9 @@ async function main() {
       getOpenIssueCountFromGithub(data.githubRepositoryLink),
       getClosedIssueCountFromGithub(data.githubRepositoryLink),
       getLastWeekDownloadsFromNpm(data.npmLink),
+      getViewCountFromYoutube(data.youtubeLink),
+      getVideoCountFromYoutube(data.youtubeLink),
+      getSubscriberCountFromYoutube(data.youtubeLink),
     ],
     toAsync,
     concurrent(10000),
@@ -86,6 +97,8 @@ async function main() {
     concurrent(10000),
     toArray,
   )
+
+  const lastVideo = await getLastVideoFromYoutube(data.youtubeLink)
 
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
@@ -117,6 +130,12 @@ async function main() {
       lastWeekDownloads,
       lastReleasedDate,
       lastReleasedVersion,
+    },
+    youtube: {
+      viewCount,
+      videoCount,
+      subscriberCount,
+      lastVideo,
     },
   })
 }
