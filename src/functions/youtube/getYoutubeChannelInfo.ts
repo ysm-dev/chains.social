@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { z } from "zod"
 
@@ -6,7 +7,7 @@ export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
     `https://www.googleapis.com/youtube/v3/channels?${new URLSearchParams({
       part: "statistics",
       id: channelId,
-      key: process.env.YOUTUBE_DATA_API_KEY!,
+      key: env.YOUTUBE_DATA_API_KEY,
     })}`,
   ).then((res) => res.json())
 

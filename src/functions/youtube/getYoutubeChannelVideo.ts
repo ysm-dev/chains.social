@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import { first, memoize } from "@fxts/core"
 import { z } from "zod"
 
@@ -8,7 +9,7 @@ export const getYoutubeChannelVideo = memoize(async (channelId: string) => {
       channelId: channelId,
       order: "date",
       maxResults: "1",
-      key: process.env.YOUTUBE_DATA_API_KEY!,
+      key: env.YOUTUBE_DATA_API_KEY,
     })}`,
   ).then((res) => res.json())
 
