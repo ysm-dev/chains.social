@@ -1,4 +1,4 @@
-import { gitHubOrgURLSchema, gitHubRepoURLSchema } from "@/validators/github"
+import { githubOrgURLSchema, githubRepoURLSchema } from "@/validators/github"
 import { subredditURLSchema } from "@/validators/reddit"
 import { telegramURLSchema } from "@/validators/telegram"
 import { filter, first, pipe } from "@fxts/core"
@@ -38,14 +38,14 @@ export const getMetadataFromCMC = async (slug: string) => {
   const githubRepo =
     pipe(
       urls.source_code || [],
-      filter((url) => gitHubRepoURLSchema.safeParse(url).success),
+      filter((url) => githubRepoURLSchema.safeParse(url).success),
       first,
     ) || null
 
   const githubOrg =
     pipe(
       urls.source_code || [],
-      filter((url) => gitHubOrgURLSchema.safeParse(url).success),
+      filter((url) => githubOrgURLSchema.safeParse(url).success),
       first,
     ) || null
 
