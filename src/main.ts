@@ -1,28 +1,30 @@
 import "dotenv/config"
 
-import { getClosedIssueCountFromGithub } from "@/functions/getClosedIssueCountFromGithub"
-import { getCommitByBotCountFromGithub } from "@/functions/getCommitByBotCountFromGithub"
-import { getCommitByUserCountFromGithub } from "@/functions/getCommitByUserCountFromGithub"
-import { getContributorCountFromGithub } from "@/functions/getContributorCountFromGithub"
-import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
-import { getForkCountFromGithub } from "@/functions/getForkCountFromGithub"
-import { getLastCommitDateFromGithub } from "@/functions/getLastCommitDateFromGithub"
-import { getLastReleasedDateFromNpm } from "@/functions/getLastReleasedDateFromNpm"
-import { getLastReleasedVersionromNpm } from "@/functions/getLastReleasedVersionFromNpm"
-import { getLastWeekDownloadsFromNpm } from "@/functions/getLastWeekDownloadsFromNpm"
-import { getLastVideoFromYoutube } from "@/functions/getLastVideoFromYoutube"
-import { getLatestReleaseDateFromGithub } from "@/functions/getLatestReleaseDateFromGithub"
-import { getLatestReleaseNameFromGithub } from "@/functions/getLatestReleaseNameFromGithub"
-import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
-import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord"
-import { getOpenIssueCountFromGithub } from "@/functions/getOpenIssueCountFromGiyhub"
-import { getPublicRepositoryCountFromGithub } from "@/functions/getPublicRepositoryCountFromGithub"
-import { getStarCountFromGithub } from "@/functions/getStarCountFromGithub"
-import { getSubscriberCountFromYoutube } from "@/functions/getSubscriberCountFromYoutube"
-import { getTotalIssueCountFromGithub } from "@/functions/getTotalIssueCountFromGithub"
-import { getVideoCountFromYoutube } from "@/functions/getVideoCountFromYoutube"
-import { getViewCountFromYoutube } from "@/functions/getViewCountFromYoutube"
-import { getWatcherCountFromGithub } from "@/functions/getWatcherCountFromGithub"
+import { getMemberCountFromDiscord } from "@/functions/discord/getMemberCountFromDiscord"
+import { getOnlineCountFromDiscord } from "@/functions/discord/getOnlineCountFromDiscord"
+import { getClosedIssueCountFromGithub } from "@/functions/github/getClosedIssueCountFromGithub"
+import { getCommitByBotCountFromGithub } from "@/functions/github/getCommitByBotCountFromGithub"
+import { getCommitByUserCountFromGithub } from "@/functions/github/getCommitByUserCountFromGithub"
+import { getContributorCountFromGithub } from "@/functions/github/getContributorCountFromGithub"
+import { getFollowerCountFromGithub } from "@/functions/github/getFollowerCountFromGithub"
+import { getForkCountFromGithub } from "@/functions/github/getForkCountFromGithub"
+import { getLastCommitDateFromGithub } from "@/functions/github/getLastCommitDateFromGithub"
+import { getLatestReleaseDateFromGithub } from "@/functions/github/getLatestReleaseDateFromGithub"
+import { getLatestReleaseNameFromGithub } from "@/functions/github/getLatestReleaseNameFromGithub"
+import { getOpenIssueCountFromGithub } from "@/functions/github/getOpenIssueCountFromGiyhub"
+import { getPublicRepositoryCountFromGithub } from "@/functions/github/getPublicRepositoryCountFromGithub"
+import { getStarCountFromGithub } from "@/functions/github/getStarCountFromGithub"
+import { getTotalIssueCountFromGithub } from "@/functions/github/getTotalIssueCountFromGithub"
+import { getWatcherCountFromGithub } from "@/functions/github/getWatcherCountFromGithub"
+import { getLastReleasedDateFromNpm } from "@/functions/npm/getLastReleasedDateFromNpm"
+import { getLastReleasedVersionromNpm } from "@/functions/npm/getLastReleasedVersionFromNpm"
+import { getLastWeekDownloadsFromNpm } from "@/functions/npm/getLastWeekDownloadsFromNpm"
+import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
+import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
+import { getLastVideoFromYoutube } from "@/functions/youtube/getLastVideoFromYoutube"
+import { getSubscriberCountFromYoutube } from "@/functions/youtube/getSubscriberCountFromYoutube"
+import { getVideoCountFromYoutube } from "@/functions/youtube/getVideoCountFromYoutube"
+import { getViewCountFromYoutube } from "@/functions/youtube/getViewCountFromYoutube"
 import { storage } from "@/lib/unstorage"
 import { isLocal } from "@/utils/isLocal"
 import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
@@ -34,6 +36,7 @@ async function main() {
     githubRepositoryLink: "https://github.com/base-org/node",
     npmLink: "https://www.npmjs.com/package/@solana/web3.js",
     youtubeLink: "https://youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA",
+    xLink: "https://x.com/solana",
   }
 
   const [
@@ -54,6 +57,8 @@ async function main() {
     viewCount,
     videoCount,
     subscriberCount,
+    xFollowerCount,
+    xFollowingCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -73,6 +78,8 @@ async function main() {
       getViewCountFromYoutube(data.youtubeLink),
       getVideoCountFromYoutube(data.youtubeLink),
       getSubscriberCountFromYoutube(data.youtubeLink),
+      getFollowerCountFromX(data.xLink),
+      getFollowingCountFromX(data.xLink),
     ],
     toAsync,
     concurrent(10000),
@@ -136,6 +143,10 @@ async function main() {
       videoCount,
       subscriberCount,
       lastVideo,
+    },
+    x: {
+      followerCount: xFollowerCount,
+      followingCount: xFollowingCount,
     },
   })
 }
