@@ -12,7 +12,12 @@ export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
 
   const data = getYoutubeChannelInfoSchema.parse(response)
 
-  return data.items.find((v) => v.id === channelId) ?? null
+  const channelData = data.items.find((v) => v.id === channelId)
+  if (!channelData) {
+    throw new Error("Channel not found")
+  }
+
+  return channelData
 })
 
 export const getYoutubeChannelInfoSchema = z.object({

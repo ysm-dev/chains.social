@@ -13,8 +13,11 @@ export const getYoutubeChannelVideo = memoize(async (channelId: string) => {
   ).then((res) => res.json())
 
   const data = getYoutubeChannelVideoSchema.parse(response)
+  if (data.items.length === 0) {
+    throw new Error("Cannot find video")
+  }
 
-  return data.items.pop() ?? null
+  return data.items[0]
 })
 
 export const getYoutubeChannelVideoSchema = z.object({
