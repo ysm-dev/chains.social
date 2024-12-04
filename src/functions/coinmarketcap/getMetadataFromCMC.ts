@@ -88,9 +88,7 @@ export const getMetadataFromCMC = async (slug: string) => {
     discord,
   }
 
-  if (slug === "bitcoin") {
-    console.log(r)
-  }
+  // console.log(r)
 
   return r
 }
