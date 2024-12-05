@@ -7,7 +7,7 @@
   },
   "packageManager": "bun@1.1.38",
   "scripts": {
-    "dev": "bun src/main.ts",
+    "dev": "bun tsx src/main.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "clean": "rm -rf node_modules .next out bun.lockb",
