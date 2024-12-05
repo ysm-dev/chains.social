@@ -14,9 +14,6 @@ export const getYoutubeChannelVideo = memoize(async (channelId: string) => {
   ).then((res) => res.json())
 
   const data = getYoutubeChannelVideoSchema.parse(response)
-  if (data.items.length === 0) {
-    throw new Error("Cannot find video")
-  }
 
   return data.items[0]
 })
@@ -30,42 +27,44 @@ export const getYoutubeChannelVideoSchema = z.object({
     totalResults: z.number(),
     resultsPerPage: z.number(),
   }),
-  items: z.array(
-    z.object({
-      kind: z.string(),
-      etag: z.string(),
-      id: z.object({
+  items: z
+    .array(
+      z.object({
         kind: z.string(),
-        videoId: z.string(),
-      }),
-      snippet: z.object({
-        publishedAt: z.string(),
-        channelId: z.string(),
-        title: z.string(),
-        description: z.string(),
-        thumbnails: z.object({
-          default: z.object({
-            url: z.string(),
-            width: z.number(),
-            height: z.number(),
-          }),
-          medium: z.object({
-            url: z.string(),
-            width: z.number(),
-            height: z.number(),
-          }),
-          high: z.object({
-            url: z.string(),
-            width: z.number(),
-            height: z.number(),
-          }),
+        etag: z.string(),
+        id: z.object({
+          kind: z.string(),
+          videoId: z.string(),
         }),
-        channelTitle: z.string(),
-        liveBroadcastContent: z.string(),
-        publishTime: z.string(),
+        snippet: z.object({
+          publishedAt: z.string(),
+          channelId: z.string(),
+          title: z.string(),
+          description: z.string(),
+          thumbnails: z.object({
+            default: z.object({
+              url: z.string(),
+              width: z.number(),
+              height: z.number(),
+            }),
+            medium: z.object({
+              url: z.string(),
+              width: z.number(),
+              height: z.number(),
+            }),
+            high: z.object({
+              url: z.string(),
+              width: z.number(),
+              height: z.number(),
+            }),
+          }),
+          channelTitle: z.string(),
+          liveBroadcastContent: z.string(),
+          publishTime: z.string(),
+        }),
       }),
-    }),
-  ),
+    )
+    .min(1),
 })
 
 export type getYoutubeChannelVideoResponse = z.infer<

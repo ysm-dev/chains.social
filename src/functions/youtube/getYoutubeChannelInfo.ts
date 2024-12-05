@@ -28,19 +28,21 @@ export const getYoutubeChannelInfoSchema = z.object({
     totalResults: z.number(),
     resultsPerPage: z.number(),
   }),
-  items: z.array(
-    z.object({
-      kind: z.string(),
-      etag: z.string(),
-      id: z.string(),
-      statistics: z.object({
-        viewCount: z.string(),
-        subscriberCount: z.string(),
-        hiddenSubscriberCount: z.boolean(),
-        videoCount: z.string(),
+  items: z
+    .array(
+      z.object({
+        kind: z.string(),
+        etag: z.string(),
+        id: z.string(),
+        statistics: z.object({
+          viewCount: z.string(),
+          subscriberCount: z.string(),
+          hiddenSubscriberCount: z.boolean(),
+          videoCount: z.string(),
+        }),
       }),
-    }),
-  ),
+    )
+    .min(1),
 })
 
 export type getYoutubeChannelInfoResponse = z.infer<
