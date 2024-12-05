@@ -17,8 +17,8 @@ import { getStarCountFromGithub } from "@/functions/github/getStarCountFromGithu
 import { getTotalIssueCountFromGithub } from "@/functions/github/getTotalIssueCountFromGithub"
 import { getWatcherCountFromGithub } from "@/functions/github/getWatcherCountFromGithub"
 import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownloadCountFromNpm"
-import { getLastReleasedDateFromNpm } from "@/functions/npm/getLastReleasedDateFromNpm"
-import { getLastReleasedVersionromNpm } from "@/functions/npm/getLastReleasedVersionFromNpm"
+import { getLastReleaseDateFromNpm } from "@/functions/npm/getLastReleaseDateFromNpm"
+import { getLastReleaseVersionFromNpm } from "@/functions/npm/getLastReleaseVersionFromNpm"
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
@@ -93,16 +93,16 @@ async function main() {
     lastCommitDate,
     latestReleaseDate,
     latestReleaseName,
-    lastReleasedDate,
-    lastReleasedVersion,
+    lastReleaseDate,
+    lastReleaseVersion,
     lastVideoDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
       getLatestReleaseDateFromGithub(data.githubRepositoryLink),
       getLatestReleaseNameFromGithub(data.githubRepositoryLink),
-      getLastReleasedDateFromNpm(data.npmLink),
-      getLastReleasedVersionromNpm(data.npmLink),
+      getLastReleaseDateFromNpm(data.npmLink),
+      getLastReleaseVersionFromNpm(data.npmLink),
       getLastVideoDateFromYoutube(data.youtubeLink),
     ],
     toAsync,
@@ -139,8 +139,8 @@ async function main() {
     npm: {
       lastDayDownloadCount,
       lastWeekDownloadCount,
-      lastReleasedDate,
-      lastReleasedVersion,
+      lastReleaseDate,
+      lastReleaseVersion,
     },
     youtube: {
       viewCount,

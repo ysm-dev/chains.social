@@ -1,7 +1,6 @@
 import { getNpmPackageInfo } from "@/functions/npm/getNpmPackageInfo"
-import { getLastSegment } from "@/utils/getLastSegment"
 
-export const getLastReleasedVersionromNpm = async (npmLink: string) => {
+export const getLastReleaseVersionFromNpm = async (npmLink: string) => {
   if (!npmLink.startsWith("https://www.npmjs.com/package/")) {
     throw new Error("Invalid npm link")
   }
