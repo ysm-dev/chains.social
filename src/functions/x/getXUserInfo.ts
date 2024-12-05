@@ -2,11 +2,11 @@ import { getXHeaders } from "@/functions/x/getXHeaders"
 import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getXUserInfo = memoize(async (userId: string) => {
+export const getXUserInfo = memoize(async (screenName: string) => {
   const response = await fetch(
     `https://x.com/i/api/graphql/QGIw94L0abhuohrr76cSbw/UserByScreenName?${new URLSearchParams(
       {
-        variables: JSON.stringify({ screen_name: userId }),
+        variables: JSON.stringify({ screen_name: screenName }),
         features: JSON.stringify({
           hidden_profile_subscriptions_enabled: true,
           profile_label_improvements_pcf_label_in_post_enabled: false,
@@ -33,7 +33,10 @@ export const getXUserInfo = memoize(async (userId: string) => {
 
   const data = getXUserInfoSchema.parse(response)
 
-  return { ...data.data.user.result.legacy }
+  return {
+    rest_id: data.data.user.result.rest_id,
+    ...data.data.user.result.legacy,
+  }
 })
 
 const getXUserInfoSchema = z.object({
@@ -47,6 +50,7 @@ const getXUserInfoSchema = z.object({
           screen_name: z.string(),
           followers_count: z.number(),
           friends_count: z.number(),
+          statuses_count: z.number(),
         }),
       }),
     }),

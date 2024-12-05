@@ -10,9 +10,11 @@ describe("getXUserInfo function format tests", () => {
 
     expect(response.screen_name).toBe(userId)
     expect(response).toMatchObject({
+      rest_id: expect.any(String),
       screen_name: expect.any(String),
       followers_count: expect.any(Number),
       friends_count: expect.any(Number),
+      statuses_count: expect.any(Number),
     })
   })
 })
