@@ -20,6 +20,8 @@ import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownlo
 import { getLastReleaseDateFromNpm } from "@/functions/npm/getLastReleaseDateFromNpm"
 import { getLastReleaseVersionFromNpm } from "@/functions/npm/getLastReleaseVersionFromNpm"
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
+import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
+import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
 import { getLastVideoDateFromYoutube } from "@/functions/youtube/getLastVideoDateFromYoutube"
@@ -38,6 +40,7 @@ async function main() {
     npmLink: "https://www.npmjs.com/package/@solana/web3.js",
     youtubeLink: "https://youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA",
     xLink: "https://x.com/solana",
+    telegramLink: "https://t.me/solana",
   }
 
   const [
@@ -61,6 +64,8 @@ async function main() {
     subscriberCount,
     xFollowerCount,
     xFollowingCount,
+    telegramMemberCount,
+    telegramOnlineCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -83,6 +88,8 @@ async function main() {
       getSubscriberCountFromYoutube(data.youtubeLink),
       getFollowerCountFromX(data.xLink),
       getFollowingCountFromX(data.xLink),
+      getMemberCountFromTelegram(data.telegramLink),
+      getOnlineCountFromTelegram(data.telegramLink),
     ],
     toAsync,
     concurrent(10000),
@@ -151,6 +158,10 @@ async function main() {
     x: {
       followerCount: xFollowerCount,
       followingCount: xFollowingCount,
+    },
+    telegram: {
+      memberCount: telegramMemberCount,
+      onlineCount: telegramOnlineCount,
     },
   })
 }
