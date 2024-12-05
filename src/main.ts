@@ -16,9 +16,10 @@ import { getPublicRepositoryCountFromGithub } from "@/functions/github/getPublic
 import { getStarCountFromGithub } from "@/functions/github/getStarCountFromGithub"
 import { getTotalIssueCountFromGithub } from "@/functions/github/getTotalIssueCountFromGithub"
 import { getWatcherCountFromGithub } from "@/functions/github/getWatcherCountFromGithub"
+import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownloadCountFromNpm"
 import { getLastReleasedDateFromNpm } from "@/functions/npm/getLastReleasedDateFromNpm"
 import { getLastReleasedVersionromNpm } from "@/functions/npm/getLastReleasedVersionFromNpm"
-import { getLastWeekDownloadsFromNpm } from "@/functions/npm/getLastWeekDownloadsFromNpm"
+import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
 import { getLastVideoFromYoutube } from "@/functions/youtube/getLastVideoFromYoutube"
@@ -53,7 +54,8 @@ async function main() {
     totalIssueCount,
     openIssueCount,
     closedIssueCount,
-    lastWeekDownloads,
+    lastWeekDownloadCount,
+    lastDayDownloadCount,
     viewCount,
     videoCount,
     subscriberCount,
@@ -74,7 +76,8 @@ async function main() {
       getTotalIssueCountFromGithub(data.githubRepositoryLink),
       getOpenIssueCountFromGithub(data.githubRepositoryLink),
       getClosedIssueCountFromGithub(data.githubRepositoryLink),
-      getLastWeekDownloadsFromNpm(data.npmLink),
+      getLastWeekDownloadCountFromNpm(data.npmLink),
+      getLastDayDownloadCountFromNpm(data.npmLink),
       getViewCountFromYoutube(data.youtubeLink),
       getVideoCountFromYoutube(data.youtubeLink),
       getSubscriberCountFromYoutube(data.youtubeLink),
@@ -134,7 +137,8 @@ async function main() {
       latestReleaseName,
     },
     npm: {
-      lastWeekDownloads,
+      lastDayDownloadCount,
+      lastWeekDownloadCount,
       lastReleasedDate,
       lastReleasedVersion,
     },
