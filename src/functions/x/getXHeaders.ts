@@ -37,7 +37,7 @@ export const getXHeaders = () => {
   const tomboy = getRandom(tomatos)
 
   return {
-    cookie: `${"nekot_htua".split("").reverse().join("")}=${tomboy.americano}; ct0=${tomboy.americano}`,
+    cookie: `${"nekot_htua".split("").reverse().join("")}=${tomboy.americano}; ct0=${tomboy.curry}`,
     authorization: `${"reraeB".split("").reverse().join("")} ${babybear}`,
     "x-csrf-token": tomboy.curry,
   }
