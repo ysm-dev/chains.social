@@ -22,7 +22,7 @@ import { getLastReleasedVersionromNpm } from "@/functions/npm/getLastReleasedVer
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
-import { getLastVideoFromYoutube } from "@/functions/youtube/getLastVideoFromYoutube"
+import { getLastVideoDateFromYoutube } from "@/functions/youtube/getLastVideoDateFromYoutube"
 import { getSubscriberCountFromYoutube } from "@/functions/youtube/getSubscriberCountFromYoutube"
 import { getVideoCountFromYoutube } from "@/functions/youtube/getVideoCountFromYoutube"
 import { getViewCountFromYoutube } from "@/functions/youtube/getViewCountFromYoutube"
@@ -95,6 +95,7 @@ async function main() {
     latestReleaseName,
     lastReleasedDate,
     lastReleasedVersion,
+    lastVideoDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -102,13 +103,12 @@ async function main() {
       getLatestReleaseNameFromGithub(data.githubRepositoryLink),
       getLastReleasedDateFromNpm(data.npmLink),
       getLastReleasedVersionromNpm(data.npmLink),
+      getLastVideoDateFromYoutube(data.youtubeLink),
     ],
     toAsync,
     concurrent(10000),
     toArray,
   )
-
-  const lastVideo = await getLastVideoFromYoutube(data.youtubeLink)
 
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
@@ -146,7 +146,7 @@ async function main() {
       viewCount,
       videoCount,
       subscriberCount,
-      lastVideo,
+      lastVideoDate,
     },
     x: {
       followerCount: xFollowerCount,
