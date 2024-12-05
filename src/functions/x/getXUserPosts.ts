@@ -1,8 +1,8 @@
 import { getXHeaders } from "@/functions/x/getXHeaders"
-import { last, memoize } from "@fxts/core"
+import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getXUserTweets = memoize(async (userId: string) => {
+export const getXUserPosts = memoize(async (userId: string) => {
   const response = await fetch(
     `https://x.com/i/api/graphql/tzh4soFIeC6EUW0aLxrYpQ/UserTweets?${new URLSearchParams(
       {
@@ -52,19 +52,19 @@ export const getXUserTweets = memoize(async (userId: string) => {
 
   const data = getXUserTweetsSchema.parse(response)
 
-  const lastTweet = data.data.user.result.timeline.timeline.instructions
+  const lastPost = data.data.user.result.timeline.timeline.instructions
     .find((v) => v.type === "TimelineAddEntries")
     ?.entries.find((v) => v.content.entryType === "TimelineTimelineItem")
 
-  if (!lastTweet || !lastTweet.content.itemContent) {
+  if (!lastPost || !lastPost.content.itemContent) {
     throw new Error("No tweets found")
   }
 
-  const lastTweetDate = new Date(
-    lastTweet.content.itemContent.tweet_results.result.legacy.created_at,
+  const lastPostDate = new Date(
+    lastPost.content.itemContent.tweet_results.result.legacy.created_at,
   ).toISOString()
 
-  return { lastTweetDate }
+  return { lastPostDate }
 })
 
 const getXUserTweetsSchema = z.object({
