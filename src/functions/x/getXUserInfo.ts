@@ -1,7 +1,8 @@
 import { getXHeaders } from "@/functions/x/getXHeaders"
+import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getXUserInfo = async (userId: string) => {
+export const getXUserInfo = memoize(async (userId: string) => {
   const response = await fetch(
     `https://x.com/i/api/graphql/QGIw94L0abhuohrr76cSbw/UserByScreenName?${new URLSearchParams(
       {
@@ -33,7 +34,7 @@ export const getXUserInfo = async (userId: string) => {
   const data = getXUserInfoSchema.parse(response)
 
   return { ...data.data.user.result.legacy }
-}
+})
 
 const getXUserInfoSchema = z.object({
   data: z.object({
