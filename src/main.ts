@@ -24,6 +24,8 @@ import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountF
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
+import { getLastTweetDateFromX } from "@/functions/x/getLastTweetDateFromX"
+import { getTweetCountFromX } from "@/functions/x/getTweetCountFromX"
 import { getLastVideoDateFromYoutube } from "@/functions/youtube/getLastVideoDateFromYoutube"
 import { getSubscriberCountFromYoutube } from "@/functions/youtube/getSubscriberCountFromYoutube"
 import { getVideoCountFromYoutube } from "@/functions/youtube/getVideoCountFromYoutube"
@@ -66,6 +68,7 @@ async function main() {
     xFollowingCount,
     telegramMemberCount,
     telegramOnlineCount,
+    tweetCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -90,6 +93,7 @@ async function main() {
       getFollowingCountFromX(data.xLink),
       getMemberCountFromTelegram(data.telegramLink),
       getOnlineCountFromTelegram(data.telegramLink),
+      getTweetCountFromX(data.xLink),
     ],
     toAsync,
     concurrent(10000),
@@ -103,6 +107,7 @@ async function main() {
     lastReleaseDate,
     lastReleaseVersion,
     lastVideoDate,
+    lastTweetDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -111,6 +116,7 @@ async function main() {
       getLastReleaseDateFromNpm(data.npmLink),
       getLastReleaseVersionFromNpm(data.npmLink),
       getLastVideoDateFromYoutube(data.youtubeLink),
+      getLastTweetDateFromX(data.xLink),
     ],
     toAsync,
     concurrent(10000),
@@ -158,6 +164,8 @@ async function main() {
     x: {
       followerCount: xFollowerCount,
       followingCount: xFollowingCount,
+      lastTweetDate,
+      tweetCount,
     },
     telegram: {
       memberCount: telegramMemberCount,
