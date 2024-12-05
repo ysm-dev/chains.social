@@ -1,11 +1,10 @@
 import { getNpmPackageInfo } from "@/functions/npm/getNpmPackageInfo"
+import { npmPackageURLSchema } from "@/validators/npm"
 
 export const getLastReleaseVersionFromNpm = async (npmLink: string) => {
-  if (!npmLink.startsWith("https://www.npmjs.com/package/")) {
-    throw new Error("Invalid npm link")
-  }
+  const validNpmLink = npmPackageURLSchema.parse(npmLink)
 
-  const packageName = npmLink.replace("https://www.npmjs.com/package/", "")
+  const packageName = validNpmLink.replace("https://www.npmjs.com/package/", "")
 
   const data = await getNpmPackageInfo(packageName)
 

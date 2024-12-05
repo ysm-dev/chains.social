@@ -1,12 +1,11 @@
 import { getNpmLastWeekDownloads } from "@/functions/npm/getNpmLastWeekDownloads"
 import { getLastSegment } from "@/utils/getLastSegment"
+import { npmPackageURLSchema } from "@/validators/npm"
 
 export const getLastWeekDownloadCountFromNpm = async (npmLink: string) => {
-  if (!npmLink.startsWith("https://www.npmjs.com/package/")) {
-    throw new Error("Invalid npm link")
-  }
+  const validNpmLink = npmPackageURLSchema.parse(npmLink)
 
-  const packageName = npmLink.replace("https://www.npmjs.com/package/", "")
+  const packageName = validNpmLink.replace("https://www.npmjs.com/package/", "")
 
   const { downloads } = await getNpmLastWeekDownloads(packageName)
 
