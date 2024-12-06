@@ -1,7 +1,8 @@
 import { getRedditAccessToken } from "@/functions/reddit/getRedditAccessToken"
+import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getRedditCommunityInfo = async (communityName: string) => {
+export const getRedditCommunityInfo = memoize(async (communityName: string) => {
   const { access_token } = await getRedditAccessToken()
 
   const response = await fetch(
@@ -16,7 +17,7 @@ export const getRedditCommunityInfo = async (communityName: string) => {
   ).then((res) => res.json())
 
   return getRedditCommunityInfoSchema.parse(response)
-}
+})
 
 const getRedditCommunityInfoSchema = z.object({
   kind: z.string(),
