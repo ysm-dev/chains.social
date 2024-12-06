@@ -12,8 +12,6 @@ describe("getGithubRepositoryRelease function format tests", () => {
       repositoryName,
     )
 
-    console.log({ response })
-
     expect(response.id).toBeGreaterThan(0)
   })
 })
