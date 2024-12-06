@@ -8,6 +8,7 @@ export default defineConfig({
       exclude: ["src/main.ts", "src/utils/**", "src/lib/**"],
     },
     testTimeout: 10 * 1000,
+    setupFiles: "dotenv/config",
   },
   resolve: {
     alias: {
