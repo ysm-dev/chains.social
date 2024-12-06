@@ -24,6 +24,8 @@ import { getLastPostDateFromReddit } from "@/functions/reddit/getLastPostDateFro
 import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
+import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
+import { getFollowingCountFromWarpcast } from "@/functions/warpcast/getFollowingCountFromWarpcast"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
 import { getLastPostDateFromX } from "@/functions/x/getLastPostDateFromX"
@@ -46,6 +48,7 @@ async function main() {
     xLink: "https://x.com/solana",
     telegramLink: "https://t.me/solana",
     redditLink: "https://reddit.com/r/solana",
+    warpcast: "https://warpcast.com/solana",
   }
 
   const [
@@ -73,6 +76,8 @@ async function main() {
     telegramOnlineCount,
     postCount,
     redditMemberCount,
+    warpcastFollowerCount,
+    warpcastFollowingCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -99,6 +104,8 @@ async function main() {
       getOnlineCountFromTelegram(data.telegramLink),
       getPostCountFromX(data.xLink),
       getMemberCountFromReddit(data.redditLink),
+      getFollowerCountFromWarpcast(data.warpcast),
+      getFollowingCountFromWarpcast(data.warpcast),
     ],
     toAsync,
     concurrent(10000),
@@ -181,6 +188,10 @@ async function main() {
     reddit: {
       memberCount: redditMemberCount,
       lastPostDate: redditLastPostDate,
+    },
+    warpcast: {
+      followerCount: warpcastFollowerCount,
+      followingCount: warpcastFollowingCount,
     },
   })
 }
