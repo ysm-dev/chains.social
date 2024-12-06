@@ -20,6 +20,7 @@ import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownlo
 import { getLastReleaseDateFromNpm } from "@/functions/npm/getLastReleaseDateFromNpm"
 import { getLastReleaseVersionFromNpm } from "@/functions/npm/getLastReleaseVersionFromNpm"
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
+import { getLastPostDateFromReddit } from "@/functions/reddit/getLastPostDateFromReddit"
 import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
@@ -112,6 +113,7 @@ async function main() {
     lastReleaseVersion,
     lastVideoDate,
     lastPostDate,
+    redditLastPostDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -121,6 +123,7 @@ async function main() {
       getLastReleaseVersionFromNpm(data.npmLink),
       getLastVideoDateFromYoutube(data.youtubeLink),
       getLastPostDateFromX(data.xLink),
+      getLastPostDateFromReddit(data.redditLink),
     ],
     toAsync,
     concurrent(10000),
@@ -177,6 +180,7 @@ async function main() {
     },
     reddit: {
       memberCount: redditMemberCount,
+      lastPostDate: redditLastPostDate,
     },
   })
 }

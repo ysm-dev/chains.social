@@ -1,15 +1,15 @@
+import { getRedditAccessToken } from "@/functions/reddit/getRedditAccessToken"
 import { z } from "zod"
 
-export const getRedditCommunityInfo = async (
-  accessToken: string,
-  communityName: string,
-) => {
+export const getRedditCommunityInfo = async (communityName: string) => {
+  const { access_token } = await getRedditAccessToken()
+
   const response = await fetch(
     `https://oauth.reddit.com/r/${communityName}/about`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${access_token}`,
         "User-Agent": "chains.social/1.0.0",
       },
     },
