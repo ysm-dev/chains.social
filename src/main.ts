@@ -20,6 +20,7 @@ import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownlo
 import { getLastReleaseDateFromNpm } from "@/functions/npm/getLastReleaseDateFromNpm"
 import { getLastReleaseVersionFromNpm } from "@/functions/npm/getLastReleaseVersionFromNpm"
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
+import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
@@ -43,6 +44,7 @@ async function main() {
     youtubeLink: "https://youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA",
     xLink: "https://x.com/solana",
     telegramLink: "https://t.me/solana",
+    redditLink: "https://reddit.com/r/solana",
   }
 
   const [
@@ -69,6 +71,7 @@ async function main() {
     telegramMemberCount,
     telegramOnlineCount,
     postCount,
+    redditMemberCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -94,6 +97,7 @@ async function main() {
       getMemberCountFromTelegram(data.telegramLink),
       getOnlineCountFromTelegram(data.telegramLink),
       getPostCountFromX(data.xLink),
+      getMemberCountFromReddit(data.redditLink),
     ],
     toAsync,
     concurrent(10000),
@@ -170,6 +174,9 @@ async function main() {
     telegram: {
       memberCount: telegramMemberCount,
       onlineCount: telegramOnlineCount,
+    },
+    reddit: {
+      memberCount: redditMemberCount,
     },
   })
 }
