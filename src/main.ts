@@ -26,6 +26,7 @@ import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountF
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
 import { getFollowingCountFromWarpcast } from "@/functions/warpcast/getFollowingCountFromWarpcast"
+import { getLastCastDateFromWarpcast } from "@/functions/warpcast/getLastCastDateFromWarpcast"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
 import { getLastPostDateFromX } from "@/functions/x/getLastPostDateFromX"
@@ -121,6 +122,7 @@ async function main() {
     lastVideoDate,
     lastPostDate,
     redditLastPostDate,
+    lastCastDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -131,6 +133,7 @@ async function main() {
       getLastVideoDateFromYoutube(data.youtubeLink),
       getLastPostDateFromX(data.xLink),
       getLastPostDateFromReddit(data.redditLink),
+      getLastCastDateFromWarpcast(data.warpcast),
     ],
     toAsync,
     concurrent(10000),
@@ -192,6 +195,7 @@ async function main() {
     warpcast: {
       followerCount: warpcastFollowerCount,
       followingCount: warpcastFollowingCount,
+      lastCastDate,
     },
   })
 }
