@@ -1,5 +1,4 @@
 import { getGithubRepositoryIssues } from "@/functions/github/getGithubRepositoryIssues"
-import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getClosedIssueCountFromGithub = async (
   githubRepositoryLink: string,

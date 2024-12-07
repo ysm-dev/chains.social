@@ -3,6 +3,7 @@ import "dotenv/config"
 import { getMemberCountFromDiscord } from "@/functions/discord/getMemberCountFromDiscord"
 import { getOnlineCountFromDiscord } from "@/functions/discord/getOnlineCountFromDiscord"
 import { getClosedIssueCountFromGithub } from "@/functions/github/getClosedIssueCountFromGithub"
+import { getClosedPRCountFromGithub } from "@/functions/github/getClosedPRCountFromGithub"
 import { getCommitByBotCountFromGithub } from "@/functions/github/getCommitByBotCountFromGithub"
 import { getCommitByUserCountFromGithub } from "@/functions/github/getCommitByUserCountFromGithub"
 import { getContributorCountFromGithub } from "@/functions/github/getContributorCountFromGithub"
@@ -11,10 +12,12 @@ import { getForkCountFromGithub } from "@/functions/github/getForkCountFromGithu
 import { getLastCommitDateFromGithub } from "@/functions/github/getLastCommitDateFromGithub"
 import { getLatestReleaseDateFromGithub } from "@/functions/github/getLatestReleaseDateFromGithub"
 import { getLatestReleaseNameFromGithub } from "@/functions/github/getLatestReleaseNameFromGithub"
-import { getOpenIssueCountFromGithub } from "@/functions/github/getOpenIssueCountFromGiyhub"
+import { getOpenIssueCountFromGithub } from "@/functions/github/getOpenIssueCountFromGithub"
+import { getOpenPRCountFromGithub } from "@/functions/github/getOpenPRCountFromGithub"
 import { getPublicRepositoryCountFromGithub } from "@/functions/github/getPublicRepositoryCountFromGithub"
 import { getStarCountFromGithub } from "@/functions/github/getStarCountFromGithub"
 import { getTotalIssueCountFromGithub } from "@/functions/github/getTotalIssueCountFromGithub"
+import { getTotalPRCountFromGithub } from "@/functions/github/getTotalPRCountFromGithub"
 import { getWatcherCountFromGithub } from "@/functions/github/getWatcherCountFromGithub"
 import { getLastDayDownloadCountFromNpm } from "@/functions/npm/getLastDayDownloadCountFromNpm"
 import { getLastReleaseDateFromNpm } from "@/functions/npm/getLastReleaseDateFromNpm"
@@ -79,6 +82,9 @@ async function main() {
     redditMemberCount,
     warpcastFollowerCount,
     warpcastFollowingCount,
+    openPRCount,
+    closedPRCount,
+    totalPRCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -107,6 +113,9 @@ async function main() {
       getMemberCountFromReddit(data.redditLink),
       getFollowerCountFromWarpcast(data.warpcast),
       getFollowingCountFromWarpcast(data.warpcast),
+      getOpenPRCountFromGithub(data.githubRepositoryLink),
+      getClosedPRCountFromGithub(data.githubRepositoryLink),
+      getTotalPRCountFromGithub(data.githubRepositoryLink),
     ],
     toAsync,
     concurrent(10000),
@@ -165,6 +174,9 @@ async function main() {
       lastCommitDate,
       latestReleaseDate,
       latestReleaseName,
+      openPRCount,
+      closedPRCount,
+      totalPRCount,
     },
     npm: {
       lastDayDownloadCount,
