@@ -1,10 +1,12 @@
-import { getYoutubeChannelVideo } from "@/functions/youtube/getYoutubeChannelVideo"
+import { getYoutubeChannelVideos } from "@/functions/youtube/getYoutubeChannelVideos"
 import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getLastVideoDateFromYoutube = async (youtubeLink: string) => {
   const channelId = getLastSegment(youtubeLink)
 
-  const { snippet } = await getYoutubeChannelVideo(channelId)
+  const data = await getYoutubeChannelVideos(channelId)
 
-  return snippet.publishedAt
+  const { publishedAt } = data.items[0].snippet
+
+  return publishedAt
 }
