@@ -6,3 +6,9 @@ export const warpcastURLSchema = z.custom<string>((param) => {
   const { hostname, pathname } = new URL(url)
   return hostname === "warpcast.com" && pathname.split("/").length === 2
 })
+
+export const warpcastChannelURLSchema = z.custom<string>((param) => {
+  const url = urlSchema.parse(param)
+  const { hostname, pathname } = new URL(url)
+  return hostname === "warpcast.com" && pathname.split("/").length === 4
+})
