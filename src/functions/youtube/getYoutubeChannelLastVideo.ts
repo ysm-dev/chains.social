@@ -2,7 +2,7 @@ import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getYoutubeChannelVideos = memoize(async (channelId: string) => {
+export const getYoutubeChannelLastVideo = memoize(async (channelId: string) => {
   const response = await fetch(
     `https://www.googleapis.com/youtube/v3/search?${new URLSearchParams({
       part: "snippet",
@@ -13,7 +13,9 @@ export const getYoutubeChannelVideos = memoize(async (channelId: string) => {
     })}`,
   ).then((res) => res.json())
 
-  return getYoutubeChannelVideoSchema.parse(response)
+  const data = getYoutubeChannelVideoSchema.parse(response)
+
+  return data.items[0]
 })
 
 export const getYoutubeChannelVideoSchema = z.object({

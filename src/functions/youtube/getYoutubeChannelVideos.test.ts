@@ -1,13 +1,12 @@
-import { getWarpcastUserInfo } from "@/functions/warpcast/getWarpcastUserInfo"
-import { getYoutubeChannelVideos } from "@/functions/youtube/getYoutubeChannelVideos"
+import { getYoutubeChannelLastVideo } from "@/functions/youtube/getYoutubeChannelLastVideo"
 import { describe, expect, it } from "vitest"
 
-describe("getYoutubeChannelVideo function format tests", () => {
+describe("getYoutubeChannelLastVideo", () => {
   it("solana", async () => {
     const channelId = "UC9AdQPUe4BdVJ8M9X7wxHUA"
 
-    const response = await getYoutubeChannelVideos(channelId)
+    const response = await getYoutubeChannelLastVideo(channelId)
 
-    expect(response.items.length).toBe(1)
+    expect(response.id).toBe(channelId)
   })
 })
