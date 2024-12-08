@@ -1,8 +1,8 @@
 import { env } from "@/lib/env"
-import { first, memoize } from "@fxts/core"
+import { memoize } from "@fxts/core"
 import { z } from "zod"
 
-export const getYoutubeChannelVideo = memoize(async (channelId: string) => {
+export const getYoutubeChannelLastVideo = memoize(async (channelId: string) => {
   const response = await fetch(
     `https://www.googleapis.com/youtube/v3/search?${new URLSearchParams({
       part: "snippet",
