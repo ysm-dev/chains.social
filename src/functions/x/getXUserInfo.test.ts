@@ -1,4 +1,3 @@
-import { getNpmLastWeekDownloads } from "@/functions/npm/getNpmLastWeekDownloads"
 import { getXUserInfo } from "@/functions/x/getXUserInfo"
 import { describe, expect, it, vi } from "vitest"
 

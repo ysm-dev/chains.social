@@ -27,6 +27,9 @@ import { getLastPostDateFromReddit } from "@/functions/reddit/getLastPostDateFro
 import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
+import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
+import { getChannelFollowingCountFromWarpcast } from "@/functions/warpcast/getChannelFollowingCountFromWarpcast"
+import { getChannelLastCastDateFromWarpcast } from "@/functions/warpcast/getChannelLastCastDateFromWarpcast"
 import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
 import { getFollowingCountFromWarpcast } from "@/functions/warpcast/getFollowingCountFromWarpcast"
 import { getLastCastDateFromWarpcast } from "@/functions/warpcast/getLastCastDateFromWarpcast"
@@ -52,7 +55,8 @@ async function main() {
     xLink: "https://x.com/solana",
     telegramLink: "https://t.me/solana",
     redditLink: "https://reddit.com/r/solana",
-    warpcast: "https://warpcast.com/solana",
+    warpcastLink: "https://warpcast.com/solana",
+    wrapcastChannelLink: "https://warpcast.com/~/channel/solana",
   }
 
   const [
@@ -85,6 +89,8 @@ async function main() {
     openPRCount,
     closedPRCount,
     totalPRCount,
+    wrapcastChannelFollowerCount,
+    wrapcastChannelFollowingCount,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -111,11 +117,13 @@ async function main() {
       getOnlineCountFromTelegram(data.telegramLink),
       getPostCountFromX(data.xLink),
       getMemberCountFromReddit(data.redditLink),
-      getFollowerCountFromWarpcast(data.warpcast),
-      getFollowingCountFromWarpcast(data.warpcast),
+      getFollowerCountFromWarpcast(data.warpcastLink),
+      getFollowingCountFromWarpcast(data.warpcastLink),
       getOpenPRCountFromGithub(data.githubRepositoryLink),
       getClosedPRCountFromGithub(data.githubRepositoryLink),
       getTotalPRCountFromGithub(data.githubRepositoryLink),
+      getChannelFollowerCountFromWarpcast(data.wrapcastChannelLink),
+      getChannelFollowingCountFromWarpcast(data.wrapcastChannelLink),
     ],
     toAsync,
     concurrent(10000),
@@ -132,6 +140,7 @@ async function main() {
     lastPostDate,
     redditLastPostDate,
     lastCastDate,
+    channelLastCastDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -142,7 +151,8 @@ async function main() {
       getLastVideoDateFromYoutube(data.youtubeLink),
       getLastPostDateFromX(data.xLink),
       getLastPostDateFromReddit(data.redditLink),
-      getLastCastDateFromWarpcast(data.warpcast),
+      getLastCastDateFromWarpcast(data.warpcastLink),
+      getChannelLastCastDateFromWarpcast(data.wrapcastChannelLink),
     ],
     toAsync,
     concurrent(10000),
@@ -208,6 +218,9 @@ async function main() {
       followerCount: warpcastFollowerCount,
       followingCount: warpcastFollowingCount,
       lastCastDate,
+      channelFollowerCount: wrapcastChannelFollowerCount,
+      channelFollowingCount: wrapcastChannelFollowingCount,
+      channelLastCastDate,
     },
   })
 }

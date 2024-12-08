@@ -13,8 +13,6 @@ describe("getGithubRepositoryPRs function format tests", () => {
       repositoryName,
     )
 
-    console.log({ response })
-
     expect(response.totalPRCount).toBeGreaterThan(0)
   })
 })
