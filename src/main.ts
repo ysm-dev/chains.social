@@ -29,10 +29,10 @@ import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountF
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
 import { getChannelFollowingCountFromWarpcast } from "@/functions/warpcast/getChannelFollowingCountFromWarpcast"
+import { getChannelLastCastDateFromWarpcast } from "@/functions/warpcast/getChannelLastCastDateFromWarpcast"
 import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
 import { getFollowingCountFromWarpcast } from "@/functions/warpcast/getFollowingCountFromWarpcast"
 import { getLastCastDateFromWarpcast } from "@/functions/warpcast/getLastCastDateFromWarpcast"
-import { getLastChannelCastDateFromWarpcast } from "@/functions/warpcast/getLastChannelCastDateFromWarpcast"
 import { getFollowerCountFromX } from "@/functions/x/getFollowerCountFromX"
 import { getFollowingCountFromX } from "@/functions/x/getFollowingCountFromX"
 import { getLastPostDateFromX } from "@/functions/x/getLastPostDateFromX"
@@ -140,7 +140,7 @@ async function main() {
     lastPostDate,
     redditLastPostDate,
     lastCastDate,
-    lastChannelCastDate,
+    channelLastCastDate,
   ] = await pipe(
     [
       getLastCommitDateFromGithub(data.githubRepositoryLink),
@@ -152,7 +152,7 @@ async function main() {
       getLastPostDateFromX(data.xLink),
       getLastPostDateFromReddit(data.redditLink),
       getLastCastDateFromWarpcast(data.warpcastLink),
-      getLastChannelCastDateFromWarpcast(data.wrapcastChannelLink),
+      getChannelLastCastDateFromWarpcast(data.wrapcastChannelLink),
     ],
     toAsync,
     concurrent(10000),
@@ -220,7 +220,7 @@ async function main() {
       lastCastDate,
       channelFollowerCount: wrapcastChannelFollowerCount,
       channelFollowingCount: wrapcastChannelFollowingCount,
-      lastChannelCastDate,
+      channelLastCastDate,
     },
   })
 }
