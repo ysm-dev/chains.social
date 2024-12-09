@@ -1,9 +1,16 @@
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getChainsSheet = async () => {
-  const csvText = await fetch(
-    "https://docs.google.com/spreadsheets/d/1wTlBs8JgUjvYS_g7BnT7Ch_XjsZmwQqT0VEQ5SEdUk4/gviz/tq?tqx=out:csv",
-  ).then((res) => res.text())
+  const csvText = await ofetch<string>(
+    "https://docs.google.com/spreadsheets/d/1wTlBs8JgUjvYS_g7BnT7Ch_XjsZmwQqT0VEQ5SEdUk4/gviz/tq",
+    {
+      query: {
+        tqx: "out:csv",
+      },
+      parseResponse: (txt) => txt,
+    },
+  )
 
   const rows = csvText.split("\n").map((row) => row.split(","))
 
@@ -15,7 +22,7 @@ export const getChainsSheet = async () => {
   const dataRows = rows.slice(1)
 
   const jsonArray = dataRows.map((row) => {
-    const obj: { [key: string]: any } = {}
+    const obj: { [key: string]: string } = {}
     headers.forEach((header, index) => {
       obj[header] = row[index].replace(/^"|"$/g, "").trim() || "" // 값이 없으면 빈 문자열
     })
