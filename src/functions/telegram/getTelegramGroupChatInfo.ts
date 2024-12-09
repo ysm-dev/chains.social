@@ -2,6 +2,10 @@ import { memoize } from "@fxts/core"
 import { Window } from "happy-dom"
 import { ofetch } from "ofetch"
 
+/*
+  x-ratelimit-limit: none
+  x-reatelimit-rest: none
+*/
 export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
   const html = await ofetch(`https://t.me/${slug}`, {
     parseResponse: (txt) => txt,

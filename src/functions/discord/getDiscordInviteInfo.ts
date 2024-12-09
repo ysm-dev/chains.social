@@ -2,6 +2,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: none
+  x-reatelimit-rest: none
+*/
 export const getDiscordInviteInfo = memoize(async (inviteId: string) => {
   const response = await ofetch<GetDiscordInviteInfoResponse>(
     `https://discord.com/api/invites/${inviteId}`,

@@ -3,6 +3,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: none
+  x-reatelimit-rest: none
+*/
 export const getYoutubeChannelLastVideo = memoize(async (channelId: string) => {
   const response = await ofetch<getYoutubeChannelVideoResponse>(
     `https://www.googleapis.com/youtube/v3/search`,

@@ -1,4 +1,4 @@
-import { getOnlineCountFromDiscord } from "@/functions/getOnlineCountFromDiscord"
+import { getOnlineCountFromDiscord } from "@/functions/discord/getOnlineCountFromDiscord"
 import { describe, expect, it } from "vitest"
 
 describe("getOnlineCountFromDiscord function format tests", () => {

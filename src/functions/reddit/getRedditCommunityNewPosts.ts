@@ -3,6 +3,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 1000
+  x-reatelimit-rest: 354 seconds
+*/
 export const getRedditCommunityNewPosts = memoize(
   async (communityName: string) => {
     const { access_token } = await getRedditAccessToken()

@@ -2,6 +2,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: none
+  x-reatelimit-rest: none
+*/
 export const getWarpcastUserCasts = memoize(async (fid: number) => {
   const response = await ofetch<GetWarpcastUserCastsResponse>(
     `https://client.warpcast.com/v2/casts`,
