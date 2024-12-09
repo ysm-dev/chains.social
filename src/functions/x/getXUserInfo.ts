@@ -1,11 +1,14 @@
 import { getXHeaders } from "@/functions/x/getXHeaders"
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getXUserInfo = memoize(async (screenName: string) => {
-  const response = await fetch(
-    `https://x.com/i/api/graphql/QGIw94L0abhuohrr76cSbw/UserByScreenName?${new URLSearchParams(
-      {
+  const response = await ofetch<GetXUserInfoResponse>(
+    `https://x.com/i/api/graphql/QGIw94L0abhuohrr76cSbw/UserByScreenName`,
+    {
+      headers: getXHeaders(),
+      query: {
         variables: JSON.stringify({ screen_name: screenName }),
         features: JSON.stringify({
           hidden_profile_subscriptions_enabled: true,
@@ -24,12 +27,8 @@ export const getXUserInfo = memoize(async (screenName: string) => {
         }),
         fieldToggles: JSON.stringify({ withAuxiliaryUserLabels: false }),
       },
-    )}`,
-    {
-      method: "GET",
-      headers: getXHeaders(),
     },
-  ).then((res) => res.json())
+  )
 
   const data = getXUserInfoSchema.parse(response)
 
@@ -56,3 +55,5 @@ const getXUserInfoSchema = z.object({
     }),
   }),
 })
+
+export type GetXUserInfoResponse = z.infer<typeof getXUserInfoSchema>

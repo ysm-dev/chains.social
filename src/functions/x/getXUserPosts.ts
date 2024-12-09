@@ -1,11 +1,14 @@
 import { getXHeaders } from "@/functions/x/getXHeaders"
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getXUserPosts = memoize(async (userId: string) => {
-  const response = await fetch(
-    `https://x.com/i/api/graphql/tzh4soFIeC6EUW0aLxrYpQ/UserTweets?${new URLSearchParams(
-      {
+  const response = await ofetch<GetXUserPostsResponse>(
+    `https://x.com/i/api/graphql/tzh4soFIeC6EUW0aLxrYpQ/UserTweets`,
+    {
+      headers: getXHeaders(),
+      query: {
         variables: JSON.stringify({
           userId: userId,
           count: 1,
@@ -43,12 +46,8 @@ export const getXUserPosts = memoize(async (userId: string) => {
         }),
         fieldToggles: JSON.stringify({ withArticlePlainText: false }),
       },
-    )}`,
-    {
-      method: "GET",
-      headers: getXHeaders(),
     },
-  ).then((res) => res.json())
+  )
 
   const data = getXUserTweetsSchema.parse(response)
 
@@ -114,3 +113,5 @@ const getXUserTweetsSchema = z.object({
     }),
   }),
 })
+
+export type GetXUserPostsResponse = z.infer<typeof getXUserTweetsSchema>

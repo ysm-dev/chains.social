@@ -1,13 +1,17 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getWarpcastUserCasts = memoize(async (fid: number) => {
-  const response = await fetch(
-    `https://client.warpcast.com/v2/casts?${new URLSearchParams({
-      fid: fid.toString(),
-      limit: "1",
-    })}`,
-  ).then((res) => res.json())
+  const response = await ofetch<GetWarpcastUserCastsResponse>(
+    `https://client.warpcast.com/v2/casts`,
+    {
+      query: {
+        fid: fid.toString(),
+        limit: "1",
+      },
+    },
+  )
 
   return getWarpcastUserCastsSchema.parse(response)
 })
@@ -24,3 +28,7 @@ const getWarpcastUserCastsSchema = z.object({
     ),
   }),
 })
+
+export type GetWarpcastUserCastsResponse = z.infer<
+  typeof getWarpcastUserCastsSchema
+>

@@ -1,4 +1,5 @@
 import { env } from "@/lib/env"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getRedditAccessToken = async () => {
@@ -6,18 +7,19 @@ export const getRedditAccessToken = async () => {
     `${env.REDDIT_CLIENT_ID}:${env.REDDIT_CLIENT_SECRET}`,
   ).toString("base64")
 
-  const response = await fetch(
-    `https://www.reddit.com/api/v1/access_token?${new URLSearchParams({
-      grant_type: "client_credentials",
-    })}`,
+  const response = await ofetch<GetAccessTokenResponse>(
+    `https://www.reddit.com/api/v1/access_token`,
     {
       method: "POST",
       headers: {
         Authorization: `Basic ${token}`,
         "User-Agent": "chains.social/1.0.0",
       },
+      query: {
+        grant_type: "client_credentials",
+      },
     },
-  ).then((res) => res.json())
+  )
 
   return getAccessTokenSchema.parse(response)
 }
@@ -28,3 +30,5 @@ const getAccessTokenSchema = z.object({
   expires_in: z.number(),
   scope: z.string(),
 })
+
+export type GetAccessTokenResponse = z.infer<typeof getAccessTokenSchema>

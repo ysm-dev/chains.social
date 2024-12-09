@@ -1,19 +1,23 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getWarpcastChannelCasts = memoize(async (channelName: string) => {
-  const response = await fetch(`https://client.warpcast.com/v2/feed-items`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await ofetch<GetWarpcastChannelCastsResponse>(
+    `https://client.warpcast.com/v2/feed-items`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        feedKey: channelName,
+        feedType: "default",
+        castViewEvents: [],
+        updateState: true,
+      },
     },
-    body: JSON.stringify({
-      feedKey: channelName,
-      feedType: "default",
-      castViewEvents: [],
-      updateState: true,
-    }),
-  }).then((res) => res.json())
+  )
 
   return getWarpcastChannelCastsSchema.parse(response)
 })
@@ -23,3 +27,7 @@ const getWarpcastChannelCastsSchema = z.object({
     feedTopSeenAtTimestamp: z.number(),
   }),
 })
+
+export type GetWarpcastChannelCastsResponse = z.infer<
+  typeof getWarpcastChannelCastsSchema
+>

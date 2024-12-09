@@ -1,8 +1,11 @@
 import { memoize } from "@fxts/core"
 import { Window } from "happy-dom"
+import { ofetch } from "ofetch"
 
 export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
-  const html = await fetch(`https://t.me/${slug}`).then((res) => res.text())
+  const html = await ofetch(`https://t.me/${slug}`, {
+    parseResponse: (txt) => txt,
+  })
 
   const window = new Window()
   const document = window.document

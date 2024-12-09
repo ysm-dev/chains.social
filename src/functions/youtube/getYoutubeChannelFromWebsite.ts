@@ -1,9 +1,8 @@
 import { Window } from "happy-dom"
+import { ofetch } from "ofetch"
 
 export const getYoutubeChannelFromWebsite = async (url: string) => {
-  const res = await fetch(url)
-
-  const html = await res.text()
+  const html = await ofetch(url, { parseResponse: (txt) => txt })
 
   const window = new Window()
   const document = window.document

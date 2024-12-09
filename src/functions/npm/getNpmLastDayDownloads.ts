@@ -1,10 +1,11 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getNpmLastDayDownloads = memoize(async (packageName: string) => {
-  const response = await fetch(
+  const response = await ofetch<GetNpmPackageDownloadsResponse>(
     `https://api.npmjs.org/downloads/point/last-day/${packageName}`,
-  ).then((res) => res.json())
+  )
 
   return getNpmLastDayDownloadsSchema.parse(response)
 })

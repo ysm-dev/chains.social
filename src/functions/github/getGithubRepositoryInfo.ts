@@ -1,11 +1,12 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getGithubRepositoryInfo = memoize(
   async (organizationName: string, repositoryName: string) => {
-    const response = await fetch(
+    const response = await ofetch<GetDiscordInviteInfoResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}`,
-    ).then<GetDiscordInviteInfoResponse>((res) => res.json())
+    )
 
     return getGithubOrganizationInfoSchema.parse(response)
   },

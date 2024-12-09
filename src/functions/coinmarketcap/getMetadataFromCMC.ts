@@ -4,11 +4,12 @@ import { telegramURLSchema } from "@/validators/telegram"
 import { entries, filter, first, fromEntries, map, pipe } from "@fxts/core"
 import { destr } from "destr"
 import { Window } from "happy-dom"
+import { ofetch } from "ofetch"
 
 export const getMetadataFromCMC = async (slug: string) => {
-  const html = await fetch(`https://coinmarketcap.com/currencies/${slug}`).then(
-    (res) => res.text(),
-  )
+  const html = await ofetch(`https://coinmarketcap.com/currencies/${slug}`, {
+    parseResponse: (txt) => txt,
+  })
 
   const window = new Window()
   const document = window.document
