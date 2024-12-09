@@ -15,7 +15,7 @@ export const getRedditCommunityNewPosts = memoize(
           "User-Agent": "chains.social/1.0.0",
         },
         query: {
-          limit: "1",
+          limit: 1,
         },
       },
     )

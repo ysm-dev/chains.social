@@ -22,7 +22,7 @@ export const getGithubRepositoryIssues = memoize(
           {
             query: {
               per_page: "100",
-              page: page.toString(),
+              page,
               state: "all",
             },
           },

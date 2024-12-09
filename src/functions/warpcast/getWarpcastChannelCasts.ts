@@ -7,9 +7,6 @@ export const getWarpcastChannelCasts = memoize(async (channelName: string) => {
     `https://client.warpcast.com/v2/feed-items`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: {
         feedKey: channelName,
         feedType: "default",

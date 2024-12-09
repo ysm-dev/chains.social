@@ -11,7 +11,7 @@ export const getYoutubeChannelLastVideo = memoize(async (channelId: string) => {
         part: "snippet",
         channelId: channelId,
         order: "date",
-        maxResults: "1",
+        maxResults: 1,
         key: env.YOUTUBE_DATA_API_KEY,
       },
     },

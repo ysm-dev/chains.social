@@ -22,8 +22,8 @@ export const getGithubRepositoryContributors = memoize(
           {
             query: {
               per_page: "100",
-              page: page.toString(),
-              anon: "true",
+              page,
+              anon: true,
             },
           },
         ),
