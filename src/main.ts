@@ -25,7 +25,9 @@ import { getLastReleaseVersionFromNpm } from "@/functions/npm/getLastReleaseVers
 import { getLastWeekDownloadCountFromNpm } from "@/functions/npm/getLastWeekDownloadCountFromNpm"
 import { getLastPostDateFromReddit } from "@/functions/reddit/getLastPostDateFromReddit"
 import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
-import { getMonthlyVisitorCountFromSim } from "@/functions/sim/getMonthlyVisitorCountFromSim"
+import { getGlobalWebsiteRankFromSim } from "@/functions/sim/getGlobalWebsiteRankFromSim"
+import { getMonthlyWebsiteVisitorCountFromSim } from "@/functions/sim/getMonthlyWebsiteVisitorCountFromSim"
+import { getWebsiteTopCountrySharesFromSim } from "@/functions/sim/getWebsiteTopCountrySharesFromSim"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
 import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
@@ -93,7 +95,8 @@ async function main() {
     totalPRCount,
     wrapcastChannelFollowerCount,
     wrapcastChannelFollowingCount,
-    monthlyVisitorCount,
+    monthlyWebsiteVisitorCount,
+    globalWebsiteRank,
   ] = await pipe(
     [
       getMemberCountFromDiscord(data.discoardLink),
@@ -127,7 +130,8 @@ async function main() {
       getTotalPRCountFromGithub(data.githubRepositoryLink),
       getChannelFollowerCountFromWarpcast(data.wrapcastChannelLink),
       getChannelFollowingCountFromWarpcast(data.wrapcastChannelLink),
-      getMonthlyVisitorCountFromSim(data.officialLink),
+      getMonthlyWebsiteVisitorCountFromSim(data.officialLink),
+      getGlobalWebsiteRankFromSim(data.officialLink),
     ],
     toAsync,
     concurrent(10000),
@@ -163,14 +167,20 @@ async function main() {
     toArray,
   )
 
+  const websiteTopCountryShares = await getWebsiteTopCountrySharesFromSim(
+    data.officialLink,
+  )
+
   console.log(`Member count: ${memberCount}`)
   console.log(`Online count: ${onlineCount}`)
 
   const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/data.json`
 
   await storage.set(folder, {
-    official: {
-      monthlyVisitorCount,
+    website: {
+      monthlyWebsiteVisitorCount,
+      globalWebsiteRank,
+      websiteTopCountryShares,
     },
     discord: {
       memberCount,

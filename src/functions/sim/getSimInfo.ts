@@ -24,6 +24,16 @@ const getSimInfoSchema = z.object({
   Engagments: z.object({
     Visits: z.string(),
   }),
+  GlobalRank: z.object({
+    Rank: z.number(),
+  }),
+  TopCountryShares: z.array(
+    z.object({
+      Country: z.number(),
+      CountryCode: z.string(),
+      Value: z.number(),
+    }),
+  ),
 })
 
 export type GetSimInfoResponse = z.infer<typeof getSimInfoSchema>
