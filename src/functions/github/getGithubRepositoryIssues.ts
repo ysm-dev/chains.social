@@ -21,7 +21,7 @@ export const getGithubRepositoryIssues = memoize(
           `https://api.github.com/repos/${organizationName}/${repositoryName}/issues`,
           {
             query: {
-              per_page: "100",
+              per_page: 100,
               page,
               state: "all",
             },

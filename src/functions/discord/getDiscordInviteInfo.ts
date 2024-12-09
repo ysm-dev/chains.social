@@ -7,7 +7,7 @@ export const getDiscordInviteInfo = memoize(async (inviteId: string) => {
     `https://discord.com/api/invites/${inviteId}`,
     {
       query: {
-        with_counts: "true",
+        with_counts: true,
       },
     },
   )

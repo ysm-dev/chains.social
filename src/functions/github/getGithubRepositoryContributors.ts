@@ -21,7 +21,7 @@ export const getGithubRepositoryContributors = memoize(
           `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors`,
           {
             query: {
-              per_page: "100",
+              per_page: 100,
               page,
               anon: true,
             },

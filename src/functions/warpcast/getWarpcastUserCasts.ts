@@ -7,8 +7,8 @@ export const getWarpcastUserCasts = memoize(async (fid: number) => {
     `https://client.warpcast.com/v2/casts`,
     {
       query: {
-        fid: fid.toString(),
-        limit: "1",
+        fid,
+        limit: 1,
       },
     },
   )

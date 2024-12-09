@@ -21,7 +21,7 @@ export const getGithubRepositoryPRs = memoize(
           `https://api.github.com/repos/${organizationName}/${repositoryName}/pulls`,
           {
             query: {
-              per_page: "100",
+              per_page: 100,
               page,
               state: "all",
             },
