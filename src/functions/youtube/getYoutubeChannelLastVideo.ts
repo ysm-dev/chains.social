@@ -1,17 +1,21 @@
 import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getYoutubeChannelLastVideo = memoize(async (channelId: string) => {
-  const response = await fetch(
-    `https://www.googleapis.com/youtube/v3/search?${new URLSearchParams({
-      part: "snippet",
-      channelId: channelId,
-      order: "date",
-      maxResults: "1",
-      key: env.YOUTUBE_DATA_API_KEY,
-    })}`,
-  ).then((res) => res.json())
+  const response = await ofetch<getYoutubeChannelVideoResponse>(
+    `https://www.googleapis.com/youtube/v3/search`,
+    {
+      query: {
+        part: "snippet",
+        channelId: channelId,
+        order: "date",
+        maxResults: 1,
+        key: env.YOUTUBE_DATA_API_KEY,
+      },
+    },
+  )
 
   const data = getYoutubeChannelVideoSchema.parse(response)
 

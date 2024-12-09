@@ -8,6 +8,7 @@ import {
   toArray,
   toAsync,
 } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getGithubRepositoryContributors = memoize(
@@ -16,15 +17,16 @@ export const getGithubRepositoryContributors = memoize(
       range(Infinity),
       toAsync,
       map(async (page) =>
-        fetch(
-          `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors?${new URLSearchParams(
-            {
-              per_page: "100",
-              page: page.toString(),
-              anon: "true",
+        ofetch<GetGithubRepositoryContributorsResponse>(
+          `https://api.github.com/repos/${organizationName}/${repositoryName}/contributors`,
+          {
+            query: {
+              per_page: 100,
+              page,
+              anon: true,
             },
-          )}`,
-        ).then((res) => res.json()),
+          },
+        ),
       ),
       map((v) => getGithubRepositoryContributorsSchema.parse(v)),
       takeUntil((v) => v.length < 100),

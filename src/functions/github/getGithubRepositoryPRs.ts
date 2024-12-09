@@ -8,6 +8,7 @@ import {
   toArray,
   toAsync,
 } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getGithubRepositoryPRs = memoize(
@@ -16,15 +17,16 @@ export const getGithubRepositoryPRs = memoize(
       range(Infinity),
       toAsync,
       map(async (page) =>
-        fetch(
-          `https://api.github.com/repos/${organizationName}/${repositoryName}/pulls?${new URLSearchParams(
-            {
-              per_page: "100",
-              page: page.toString(),
+        ofetch<GetGithubIssuesResponse>(
+          `https://api.github.com/repos/${organizationName}/${repositoryName}/pulls`,
+          {
+            query: {
+              per_page: 100,
+              page,
               state: "all",
             },
-          )}`,
-        ).then((res) => res.json()),
+          },
+        ),
       ),
       map((v) => getGithubIssuesSchema.parse(v)),
       takeUntil((v) => v.length < 100),

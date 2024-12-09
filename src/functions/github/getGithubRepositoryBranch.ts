@@ -1,4 +1,5 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getGithubRepositoryBranch = memoize(
@@ -7,9 +8,9 @@ export const getGithubRepositoryBranch = memoize(
     repositoryName: string,
     defaultBranch: string,
   ) => {
-    const response = await fetch(
+    const response = await ofetch<GetDiscordInviteBranchResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/branches/${defaultBranch}`,
-    ).then((res) => res.json())
+    )
 
     const data = getGithubRepositoryBranchSchema.parse(response)
 

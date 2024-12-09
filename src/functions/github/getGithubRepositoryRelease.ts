@@ -1,11 +1,12 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getGithubRepositoryRelease = memoize(
   async (organizationName: string, repositoryName: string) => {
-    const response = await fetch(
+    const response = await ofetch<GetGithubRepositoryResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/releases/latest`,
-    ).then((res) => res.json())
+    )
 
     return getGithubRepositoryReleaseSchema.parse(response)
   },

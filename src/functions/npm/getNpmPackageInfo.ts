@@ -1,10 +1,11 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getNpmPackageInfo = memoize(async (packageName: string) => {
-  const response = await fetch(
+  const response = await ofetch<GetNpmPackageInfoResponse>(
     `https://registry.npmjs.org/${packageName}`,
-  ).then((res) => res.json())
+  )
 
   return getNpmPackageInfoSchema.parse(response)
 })

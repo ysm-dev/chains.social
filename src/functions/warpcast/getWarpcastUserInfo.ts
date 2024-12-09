@@ -1,10 +1,16 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getWarpcastUserInfo = memoize(async (userName: string) => {
-  const response = await fetch(
-    `https://client.warpcast.com/v2/user-by-username?username=${userName}`,
-  ).then((res) => res.json())
+  const response = await ofetch<GetWarpcastUserInfoResponse>(
+    `https://client.warpcast.com/v2/user-by-username`,
+    {
+      query: {
+        username: userName,
+      },
+    },
+  )
 
   return getWrapcasetUserInfoSchema.parse(response)
 })
@@ -19,3 +25,7 @@ const getWrapcasetUserInfoSchema = z.object({
     }),
   }),
 })
+
+export type GetWarpcastUserInfoResponse = z.infer<
+  typeof getWrapcasetUserInfoSchema
+>

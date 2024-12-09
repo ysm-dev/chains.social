@@ -1,12 +1,16 @@
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getDiscordInviteInfo = memoize(async (inviteId: string) => {
-  const response = await fetch(
-    `https://discord.com/api/invites/${inviteId}?${new URLSearchParams({
-      with_counts: "true",
-    })}`,
-  ).then<GetDiscordInviteInfoResponse>((res) => res.json())
+  const response = await ofetch<GetDiscordInviteInfoResponse>(
+    `https://discord.com/api/invites/${inviteId}`,
+    {
+      query: {
+        with_counts: true,
+      },
+    },
+  )
 
   return getDiscordInviteInfoSchema.parse(response)
 })
