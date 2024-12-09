@@ -1,9 +1,9 @@
+import { getDocument } from "@/utils/getDocument"
 import { githubOrgURLSchema, githubRepoURLSchema } from "@/validators/github"
 import { subredditURLSchema } from "@/validators/reddit"
 import { telegramURLSchema } from "@/validators/telegram"
 import { entries, filter, first, fromEntries, map, pipe } from "@fxts/core"
 import { destr } from "destr"
-import { Window } from "happy-dom"
 import { ofetch } from "ofetch"
 
 export const getMetadataFromCMC = async (slug: string) => {
@@ -11,10 +11,7 @@ export const getMetadataFromCMC = async (slug: string) => {
     parseResponse: (txt) => txt,
   })
 
-  const window = new Window()
-  const document = window.document
-
-  document.body.innerHTML = html
+  const document = getDocument(html)
 
   const json = destr<R>(document.getElementById("__NEXT_DATA__")!.textContent)
 
