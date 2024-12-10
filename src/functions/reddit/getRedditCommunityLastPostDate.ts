@@ -16,7 +16,7 @@ export const getRedditCommunityLastPostDate = memoize(async (slug: string) => {
 
   const datetimeValue = dateTag.getAttribute("ts")
   if (!datetimeValue) {
-    throw new Error("<faceplate-timeag> tag does not have a 'ts' attribute.")
+    throw new Error("<faceplate-timeago> tag does not have a 'ts' attribute.")
   }
 
   return new Date(datetimeValue).toISOString()
