@@ -7,6 +7,6 @@ describe("getYoutubeChannelLastVideo", () => {
 
     const response = await getYoutubeChannelLastVideo(channelId)
 
-    expect(response.id).toBe(channelId)
+    expect(response.snippet.channelId).toBe(channelId)
   })
 })

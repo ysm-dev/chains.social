@@ -1,4 +1,4 @@
-import { getPublicRepositoryCountFromGithub } from "@/functions/getPublicRepositoryCountFromGithub"
+import { getPublicRepositoryCountFromGithub } from "@/functions/github/getPublicRepositoryCountFromGithub"
 import { describe, expect, it } from "vitest"
 
 describe("getPublicRepositoryCountFromGithub function format tests", () => {

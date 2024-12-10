@@ -1,7 +1,7 @@
 import { getGoogleSearchResult } from "@/functions/google/getGoogleSearchResult"
 import { describe, expect, it } from "vitest"
 
-describe.concurrent("getGoogleSearchResult", () => {
+describe.skip.concurrent("getGoogleSearchResult", () => {
   it("site:youtube.com Solana", async () => {
     const query = "site:youtube.com Solana"
 

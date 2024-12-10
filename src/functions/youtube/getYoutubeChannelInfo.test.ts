@@ -1,5 +1,4 @@
 import { getYoutubeChannelInfo } from "@/functions/youtube/getYoutubeChannelInfo"
-import { getYoutubeChannelVideos } from "@/functions/youtube/getYoutubeChannelVideos"
 import { describe, expect, it } from "vitest"
 
 describe("getYoutubeChannelInfo function format tests", () => {

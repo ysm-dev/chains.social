@@ -1,4 +1,4 @@
-import { getFollowerCountFromGithub } from "@/functions/getFollowerCountFromGithub"
+import { getFollowerCountFromGithub } from "@/functions/github/getFollowerCountFromGithub"
 import { describe, expect, it } from "vitest"
 
 describe("getFollowerCountFromGithub function format tests", () => {

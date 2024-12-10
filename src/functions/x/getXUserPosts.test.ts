@@ -1,7 +1,7 @@
 import { getXUserPosts } from "@/functions/x/getXUserPosts"
 import { describe, expect, it } from "vitest"
 
-describe("getXUserPosts function format tests", () => {
+describe.concurrent("getXUserPosts function format tests", () => {
   it("solana", async () => {
     const userId = "951329744804392960"
 
