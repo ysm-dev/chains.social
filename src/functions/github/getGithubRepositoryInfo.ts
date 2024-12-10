@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
@@ -10,6 +11,11 @@ export const getGithubRepositoryInfo = memoize(
   async (organizationName: string, repositoryName: string) => {
     const response = await ofetch<GetDiscordInviteInfoResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}`,
+      {
+        headers: {
+          Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+        },
+      },
     )
 
     return getGithubOrganizationInfoSchema.parse(response)
