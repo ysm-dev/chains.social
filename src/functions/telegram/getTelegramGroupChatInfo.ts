@@ -4,7 +4,7 @@ import { ofetch } from "ofetch"
 
 /*
   x-ratelimit-limit: none
-  x-reatelimit-rest: none
+  x-ratelimit-rest: none
 */
 export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
   const html = await ofetch(`https://t.me/${slug}`, {
