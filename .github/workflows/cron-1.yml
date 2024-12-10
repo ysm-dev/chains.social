@@ -23,6 +23,9 @@ jobs:
 
       - run: bun i -f
       - run: bun tsx src/main.ts
+        env:
+          YOUTUBE_DATA_API_KEY: ${{ secrets.YOUTUBE_DATA_API_KEY }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
 
       - name: Commit
         uses: nick-fields/retry@master

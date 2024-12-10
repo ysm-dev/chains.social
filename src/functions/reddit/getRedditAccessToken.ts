@@ -1,4 +1,4 @@
-import { env } from "@/lib/env"
+import { REDDIT_CLIENT_ID, env } from "@/lib/env"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
@@ -8,7 +8,7 @@ import { z } from "zod"
 */
 export const getRedditAccessToken = async () => {
   const token = Buffer.from(
-    `${env.REDDIT_CLIENT_ID}:${env.REDDIT_CLIENT_SECRET}`,
+    `${REDDIT_CLIENT_ID}:${env.REDDIT_CLIENT_SECRET}`,
   ).toString("base64")
 
   const response = await ofetch<GetAccessTokenResponse>(
