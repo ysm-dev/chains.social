@@ -12,7 +12,7 @@ export const getGithubOrgFromWebsite = async (url: string) => {
     map((a) => a.href),
     filter((url) => url.includes("github.com")),
     map((url) => (url.startsWith("//") ? `https:${url}` : url)),
-    // reove query params
+    // remove query params
     map((url) => url.split("?")[0]),
     // remove trailing slash with regex
     map((url) => url.replace(/\/$/, "")),
