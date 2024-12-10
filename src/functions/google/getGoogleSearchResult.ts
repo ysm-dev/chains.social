@@ -66,7 +66,5 @@ export const getGoogleSearchResult = async (query: string, limit = 100) => {
     toArray,
   )
 
-  // console.log(r)
-
   return r
 }

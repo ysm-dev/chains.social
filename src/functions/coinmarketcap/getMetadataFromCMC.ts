@@ -97,8 +97,6 @@ export const getMetadataFromCMC = async (slug: string) => {
     fromEntries,
   )
 
-  console.log(result)
-
   return result
 }
 
