@@ -7,6 +7,10 @@ on:
 
   workflow_dispatch:
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
   archive:
     runs-on: ubuntu-latest
