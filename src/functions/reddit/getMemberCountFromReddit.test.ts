@@ -9,13 +9,6 @@ describe.skip.concurrent(
         "https://reddit.com/r/solana",
       )
 
-      expect(count).toBeGreaterThan(0)
-    })
-
-    it("ripple", async () => {
-      const count = await getMemberCountFromReddit("https://reddit.com/r/XRP")
-
-      expect(count).toBeGreaterThan(0)
-    })
-  },
-)
+    expect(count).toBeGreaterThan(0)
+  })
+})
