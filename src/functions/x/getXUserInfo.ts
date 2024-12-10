@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: 95
-  x-reatelimit-rest: 15 minutes
+  x-ratelimit-rest: 15 minutes
 */
 export const getXUserInfo = memoize(async (screenName: string) => {
   const response = await ofetch<GetXUserInfoResponse>(

@@ -4,7 +4,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: none
-  x-reatelimit-rest: none
+  x-ratelimit-rest: none
 */
 export const getNpmLastDayDownloads = memoize(async (packageName: string) => {
   const response = await ofetch<GetNpmPackageDownloadsResponse>(

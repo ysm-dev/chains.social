@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: 5000
-  x-reatelimit-rest: 1 hour
+  x-ratelimit-rest: 1 hour
 */
 export const getGithubOrganizationInfo = memoize(
   async (organizationName: string) => {

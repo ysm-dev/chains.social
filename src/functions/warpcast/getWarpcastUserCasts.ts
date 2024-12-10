@@ -4,7 +4,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: none
-  x-reatelimit-rest: none
+  x-ratelimit-rest: none
 */
 export const getWarpcastUserCasts = memoize(async (fid: number) => {
   const response = await ofetch<GetWarpcastUserCastsResponse>(

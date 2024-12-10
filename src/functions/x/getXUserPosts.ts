@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: 50
-  x-reatelimit-rest: 15 minutes
+  x-ratelimit-rest: 15 minutes
 */
 export const getXUserPosts = memoize(async (userId: string) => {
   const response = await ofetch<GetXUserPostsResponse>(

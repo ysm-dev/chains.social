@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: none
-  x-reatelimit-rest: none
+  x-ratelimit-rest: none
 */
 export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
   const response = await ofetch<getYoutubeChannelInfoResponse>(
