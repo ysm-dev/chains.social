@@ -11,6 +11,10 @@ import {
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 5000
+  x-ratelimit-rest: 1 hour
+*/
 export const getGithubRepositoryContributors = memoize(
   async (organizationName: string, repositoryName: string) => {
     const contributors = await pipe(

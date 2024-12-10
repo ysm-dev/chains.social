@@ -2,6 +2,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 5000
+  x-ratelimit-rest: 1 hour
+*/
 export const getGithubRepositoryRelease = memoize(
   async (organizationName: string, repositoryName: string) => {
     const response = await ofetch<GetGithubRepositoryResponse>(

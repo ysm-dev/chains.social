@@ -3,6 +3,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 95
+  x-ratelimit-rest: 15 minutes
+*/
 export const getXUserInfo = memoize(async (screenName: string) => {
   const response = await ofetch<GetXUserInfoResponse>(
     `https://x.com/i/api/graphql/QGIw94L0abhuohrr76cSbw/UserByScreenName`,

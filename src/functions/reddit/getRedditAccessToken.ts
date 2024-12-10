@@ -2,6 +2,10 @@ import { env } from "@/lib/env"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: none
+  x-ratelimit-rest: none
+*/
 export const getRedditAccessToken = async () => {
   const token = Buffer.from(
     `${env.REDDIT_CLIENT_ID}:${env.REDDIT_CLIENT_SECRET}`,

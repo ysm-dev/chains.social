@@ -1,7 +1,12 @@
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
+import type { aC } from "vitest/dist/chunks/reporters.D7Jzd9GS.js"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 5000
+  x-ratelimit-rest: 1 hour
+*/
 export const getGithubOrganizationInfo = memoize(
   async (organizationName: string) => {
     const response = await ofetch<GetDiscordInviteInfoResponse>(

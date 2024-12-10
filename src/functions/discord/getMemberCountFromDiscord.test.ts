@@ -1,4 +1,4 @@
-import { getMemberCountFromDiscord } from "@/functions/getMemberCountFromDiscord"
+import { getMemberCountFromDiscord } from "@/functions/discord/getMemberCountFromDiscord"
 import { describe, expect, it } from "vitest"
 
 describe("getMemberCountFromDiscord function format tests", () => {

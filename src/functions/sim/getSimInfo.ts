@@ -2,6 +2,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: none
+  x-ratelimit-rest: none
+*/
 export const getSimInfo = memoize(async (hostname: string) => {
   const response = await ofetch<GetSimInfoResponse>(
     `https://data.similarweb.com/api/v1/data`,
