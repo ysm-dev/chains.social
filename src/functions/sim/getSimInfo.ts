@@ -4,7 +4,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: none
-  x-reatelimit-rest: none
+  x-ratelimit-rest: none
 */
 export const getSimInfo = memoize(async (hostname: string) => {
   const response = await ofetch<GetSimInfoResponse>(

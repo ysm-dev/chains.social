@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: 1000
-  x-reatelimit-rest: 354 seconds
+  x-ratelimit-rest: 354 seconds
 */
 export const getRedditCommunityNewPosts = memoize(
   async (communityName: string) => {

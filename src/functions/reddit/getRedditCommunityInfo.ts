@@ -5,7 +5,7 @@ import { z } from "zod"
 
 /*
   x-ratelimit-limit: 1000
-  x-reatelimit-rest: 64 seconds
+  x-ratelimit-reset: 64 seconds
 */
 export const getRedditCommunityInfo = memoize(async (communityName: string) => {
   const { access_token } = await getRedditAccessToken()
