@@ -1,10 +1,11 @@
 import { createEnv } from "@t3-oss/env-core"
 import { z } from "zod"
 
+export const REDDIT_CLIENT_ID = `0f6IA6dXKyjm3FV1hqrBSg`
+
 export const env = createEnv({
   server: {
     YOUTUBE_DATA_API_KEY: z.string().min(1),
-    REDDIT_CLIENT_ID: z.string().min(1),
     REDDIT_CLIENT_SECRET: z.string().min(1),
   },
 
