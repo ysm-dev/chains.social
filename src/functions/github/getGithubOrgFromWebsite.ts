@@ -16,7 +16,7 @@ export const getGithubOrgFromWebsite = async (url: string) => {
     map((url) => url.split("?")[0]),
     // remove trailing slash with regex
     map((url) => url.replace(/\/$/, "")),
-    // pathanme split '/' length should be 2 or 3
+    // pathname split '/' length should be 2 or 3
     filter(
       (url) =>
         new URL(url).pathname.split("/").length === 2 ||
