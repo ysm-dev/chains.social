@@ -1,13 +1,10 @@
-import { Window } from "happy-dom"
+import { getDocument } from "@/utils/getDocument"
 import { ofetch } from "ofetch"
 
 export const getYoutubeChannelFromWebsite = async (url: string) => {
   const html = await ofetch(url, { parseResponse: (txt) => txt })
 
-  const window = new Window()
-  const document = window.document
-
-  document.body.innerHTML = html
+  const document = getDocument(html)
 
   const youtubeLinks = Array.from(document.querySelectorAll("a"))
     .map((a) => a.href)

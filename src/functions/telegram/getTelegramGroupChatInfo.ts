@@ -1,5 +1,5 @@
+import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
-import { Window } from "happy-dom"
 import { ofetch } from "ofetch"
 
 export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
@@ -7,10 +7,7 @@ export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
     parseResponse: (txt) => txt,
   })
 
-  const window = new Window()
-  const document = window.document
-
-  document.body.innerHTML = html
+  const document = getDocument(html)
 
   const element = document.querySelector(".tgme_page_extra")
   if (!element) {
