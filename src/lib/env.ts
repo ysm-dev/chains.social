@@ -7,7 +7,7 @@ export const env = createEnv({
   server: {
     YOUTUBE_DATA_API_KEY: z.string().min(1),
     REDDIT_CLIENT_SECRET: z.string().min(1),
-    GITHUB_TOKEN: z.string().min(1),
+    GITHUBPAT_TOKEN: z.string().min(1),
   },
 
   /**

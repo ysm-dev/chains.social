@@ -31,7 +31,7 @@ export const getGithubRepositoryContributors = memoize(
               anon: true,
             },
             headers: {
-              Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+              Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
             },
           },
         ),

@@ -17,7 +17,7 @@ export const getGithubRepositoryBranch = memoize(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/branches/${defaultBranch}`,
       {
         headers: {
-          Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
       },
     )

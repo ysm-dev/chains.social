@@ -13,7 +13,7 @@ export const getGithubRepositoryRelease = memoize(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/releases/latest`,
       {
         headers: {
-          Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
       },
     )

@@ -14,7 +14,7 @@ export const getGithubOrganizationInfo = memoize(
       `https://api.github.com/orgs/${organizationName}`,
       {
         headers: {
-          Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
       },
     )

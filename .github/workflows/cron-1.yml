@@ -26,6 +26,7 @@ jobs:
         env:
           YOUTUBE_DATA_API_KEY: ${{ secrets.YOUTUBE_DATA_API_KEY }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          GITHUBPAT_TOKEN: ${{ secrets.GITHUBPAT_TOKEN }}
 
       - name: Commit
         uses: nick-fields/retry@master

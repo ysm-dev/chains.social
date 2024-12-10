@@ -31,7 +31,7 @@ export const getGithubRepositoryPRs = memoize(
               state: "all",
             },
             headers: {
-              Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+              Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
             },
           },
         ),

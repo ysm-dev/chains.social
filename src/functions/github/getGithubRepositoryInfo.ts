@@ -13,7 +13,7 @@ export const getGithubRepositoryInfo = memoize(
       `https://api.github.com/repos/${organizationName}/${repositoryName}`,
       {
         headers: {
-          Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
       },
     )
