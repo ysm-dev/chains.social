@@ -3,6 +3,10 @@ import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
+/*
+  x-ratelimit-limit: 50
+  x-reatelimit-rest: 15 minutes
+*/
 export const getXUserPosts = memoize(async (userId: string) => {
   const response = await ofetch<GetXUserPostsResponse>(
     `https://x.com/i/api/graphql/tzh4soFIeC6EUW0aLxrYpQ/UserTweets`,
