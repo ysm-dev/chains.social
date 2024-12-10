@@ -1,8 +1,7 @@
-import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
 import { getLastCastDateFromWarpcast } from "@/functions/warpcast/getLastCastDateFromWarpcast"
 import { describe, expect, it } from "vitest"
 
-describe("getLastCastDateFromWarpcast function format tests", () => {
+describe.concurrent("getLastCastDateFromWarpcast function format tests", () => {
   it("solana", async () => {
     const response = await getLastCastDateFromWarpcast(
       "https://warpcast.com/solana",

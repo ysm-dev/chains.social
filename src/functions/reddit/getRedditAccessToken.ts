@@ -1,4 +1,5 @@
 import { REDDIT_CLIENT_ID, env } from "@/lib/env"
+import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
 
@@ -6,7 +7,7 @@ import { z } from "zod"
   x-ratelimit-limit: none
   x-ratelimit-rest: none
 */
-export const getRedditAccessToken = async () => {
+export const getRedditAccessToken = memoize(async () => {
   const token = Buffer.from(
     `${REDDIT_CLIENT_ID}:${env.REDDIT_CLIENT_SECRET}`,
   ).toString("base64")
@@ -26,7 +27,7 @@ export const getRedditAccessToken = async () => {
   )
 
   return getAccessTokenSchema.parse(response)
-}
+})
 
 const getAccessTokenSchema = z.object({
   access_token: z.string(),
