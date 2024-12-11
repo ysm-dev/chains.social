@@ -1,3 +1,4 @@
+import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
 import ms from "ms"
 import { chromium as chrome } from "playwright-extra"
@@ -37,36 +38,35 @@ export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
   // h1 with "r/solana" text
   await page.waitForSelector("h1:has-text('r/solana')")
 
-  const memberCount = await page.evaluate(() => {
-    const targetH1 = Array.from(document.querySelectorAll("h1")).find(
-      (h1) => h1.textContent?.trim() === "r/solana",
-    )
+  const html = await page.content()
+  browser.close()
 
-    if (!targetH1 || !targetH1.parentElement) {
-      throw new Error('No <h1> tag with "r/solana" found.')
-    }
+  const document = getDocument(html)
 
-    const siblingWithMembers = Array.from(targetH1.parentElement.children).find(
-      (sibling) =>
-        sibling !== targetH1 && sibling.textContent?.includes("members"),
-    )
+  const targetH1 = Array.from(document.querySelectorAll("h1")).find(
+    (h1) => h1.textContent.trim() === "r/solana",
+  )
 
-    if (!siblingWithMembers) {
-      throw new Error('No sibling with "members" in its content found.')
-    }
-
-    const faceplateTag = siblingWithMembers.querySelector("faceplate-number")
-
-    if (!faceplateTag) {
-      throw new Error("No <faceplate-number> tag found in the sibling.")
-    }
-
-    return faceplateTag.getAttribute("number")
-  })
-
-  if (!memberCount) {
-    throw new Error("No member count found.")
+  if (!targetH1 || !targetH1.parentElement) {
+    throw new Error('No <h1> tag with "r/solana" found.')
   }
+
+  const siblingWithMembers = Array.from(targetH1.parentElement.children).find(
+    (sibling) =>
+      sibling !== targetH1 && sibling.textContent.includes("members"),
+  )
+
+  if (!siblingWithMembers) {
+    throw new Error('No sibling with "members" in its content found.')
+  }
+
+  const faceplateTag = siblingWithMembers.querySelector("faceplate-number")
+
+  if (!faceplateTag) {
+    throw new Error("No <faceplate-number> tag found in the sibling.")
+  }
+
+  const memberCount = faceplateTag.getAttribute("number")
 
   return +memberCount
 })
