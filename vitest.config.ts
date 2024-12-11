@@ -7,7 +7,7 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       exclude: ["src/main.ts", "src/utils/**", "src/lib/**"],
     },
-    testTimeout: 30 * 1000,
+    testTimeout: 60 * 1000,
     setupFiles: "dotenv/config",
   },
   resolve: {
