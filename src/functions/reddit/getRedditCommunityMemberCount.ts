@@ -33,7 +33,9 @@ export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
 
   const page = await context.newPage()
 
-  await page.goto(`https://reddit.com/r/${slug}`)
+  await page.goto(
+    `https://proxy.ysmdev.workers.dev/https://reddit.com/r/${slug}`,
+  )
 
   // h1 with "r/solana" text
   await page.waitForSelector("h1:has-text('r/solana')")
