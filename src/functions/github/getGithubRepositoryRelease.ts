@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
@@ -10,6 +11,11 @@ export const getGithubRepositoryRelease = memoize(
   async (organizationName: string, repositoryName: string) => {
     const response = await ofetch<GetGithubRepositoryResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/releases/latest`,
+      {
+        headers: {
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
+        },
+      },
     )
 
     return getGithubRepositoryReleaseSchema.parse(response)

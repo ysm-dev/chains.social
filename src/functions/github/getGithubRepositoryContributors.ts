@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import {
   flat,
   map,
@@ -28,6 +29,9 @@ export const getGithubRepositoryContributors = memoize(
               per_page: 100,
               page,
               anon: true,
+            },
+            headers: {
+              Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
             },
           },
         ),

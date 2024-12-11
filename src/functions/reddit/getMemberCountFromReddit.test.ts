@@ -11,11 +11,5 @@ describe.skip.concurrent(
 
       expect(count).toBeGreaterThan(0)
     })
-
-    it("ripple", async () => {
-      const count = await getMemberCountFromReddit("https://reddit.com/r/XRP")
-
-      expect(count).toBeGreaterThan(0)
-    })
   },
 )
