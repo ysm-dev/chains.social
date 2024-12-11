@@ -1,4 +1,5 @@
 import { getRedditAccessToken } from "@/functions/reddit/getRedditAccessToken"
+import { defaultBrowserHeaders } from "@/utils/defaultBrowserHeaders"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
@@ -15,8 +16,8 @@ export const getRedditCommunityNewPosts = memoize(
       `https://oauth.reddit.com/r/${communityName}/new`,
       {
         headers: {
+          ...defaultBrowserHeaders,
           Authorization: `Bearer ${access_token}`,
-          "User-Agent": "chains.social/1.0.0",
         },
         query: {
           limit: 1,
