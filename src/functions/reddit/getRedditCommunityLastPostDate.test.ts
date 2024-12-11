@@ -1,7 +1,7 @@
 import { getRedditCommunityLastPostDate } from "@/functions/reddit/getRedditCommunityLastPostDate"
 import { describe, expect, it } from "vitest"
 
-describe.skip("getRedditCommunityMemberCount", () => {
+describe("getRedditCommunityMemberCount", () => {
   it("solana", async () => {
     const lastPostDate = await getRedditCommunityLastPostDate("solana")
 
