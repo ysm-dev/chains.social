@@ -1,7 +1,7 @@
 import { getRedditCommunityNewPosts } from "@/functions/reddit/getRedditCommunityNewPosts"
 import { describe, expect, it } from "vitest"
 
-describe.skip("getRedditCommunityNewPosts function format tests", () => {
+describe("getRedditCommunityNewPosts function format tests", () => {
   it("solana", async () => {
     const {
       data: { children },
