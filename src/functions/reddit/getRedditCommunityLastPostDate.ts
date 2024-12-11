@@ -1,14 +1,12 @@
+import { PROXY_URL } from "@/lib/env"
 import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 
 export const getRedditCommunityLastPostDate = memoize(async (slug: string) => {
-  const html = await ofetch(
-    `https://proxy.ysmdev.workers.dev/https://reddit.com/r/${slug}/new`,
-    {
-      parseResponse: (txt) => txt,
-    },
-  )
+  const html = await ofetch(`${PROXY_URL}/https://reddit.com/r/${slug}/new`, {
+    parseResponse: (txt) => txt,
+  })
 
   const document = getDocument(html)
 

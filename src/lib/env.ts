@@ -3,6 +3,8 @@ import { z } from "zod"
 
 export const REDDIT_CLIENT_ID = `0f6IA6dXKyjm3FV1hqrBSg`
 
+export const PROXY_URL = `https://proxy.ysmdev.workers.dev`
+
 export const env = createEnv({
   server: {
     YOUTUBE_DATA_API_KEY: z.string().min(1),
