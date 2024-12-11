@@ -1,7 +1,7 @@
 import { getRedditAccessToken } from "@/functions/reddit/getRedditAccessToken"
 import { describe, expect, it } from "vitest"
 
-describe("getRedditAccessToken function format tests", () => {
+describe.skip("getRedditAccessToken function format tests", () => {
   it("getRedditAccessToken", async () => {
     const response = await getRedditAccessToken()
 

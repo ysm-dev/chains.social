@@ -1,3 +1,4 @@
+import { env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
@@ -14,6 +15,11 @@ export const getGithubRepositoryBranch = memoize(
   ) => {
     const response = await ofetch<GetDiscordInviteBranchResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/branches/${defaultBranch}`,
+      {
+        headers: {
+          Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
+        },
+      },
     )
 
     const data = getGithubRepositoryBranchSchema.parse(response)

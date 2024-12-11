@@ -1,4 +1,4 @@
-import { getRedditCommunityInfo } from "@/functions/reddit/getRedditCommunityInfo"
+import { getRedditCommunityMemberCount } from "@/functions/reddit/getRedditCommunityMemberCount"
 import { getLastSegment } from "@/utils/getLastSegment"
 import { subredditURLSchema } from "@/validators/reddit"
 
@@ -7,9 +7,7 @@ export const getMemberCountFromReddit = async (redditLink: string) => {
 
   const communityName = getLastSegment(validUrl)
 
-  const {
-    data: { subscribers },
-  } = await getRedditCommunityInfo(communityName)
+  const memberCount = getRedditCommunityMemberCount(communityName)
 
-  return subscribers
+  return memberCount
 }
