@@ -1,47 +1,14 @@
 import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
-import ms from "ms"
-import { chromium as chrome } from "playwright-extra"
-import type { BrowserContextOptions } from "playwright/test"
-import StealthPlugin from "puppeteer-extra-plugin-stealth"
-
-const browserContext: BrowserContextOptions = {
-  colorScheme: "dark",
-  viewport: {
-    width: 1920,
-    height: 1080,
-  },
-  locale: "en-US",
-  ignoreHTTPSErrors: true,
-  bypassCSP: true,
-  reducedMotion: "reduce",
-  javaScriptEnabled: false,
-  userAgent:
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
-}
+import { ofetch } from "ofetch"
 
 export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
-  const chromium = chrome.use(StealthPlugin())
-
-  const browser = await chromium.launch({
-    headless: true,
-    devtools: false,
-    timeout: ms("10m"),
-  })
-
-  const context = await browser.newContext(browserContext)
-
-  const page = await context.newPage()
-
-  await page.goto(
+  const html = await ofetch(
     `https://proxy.ysmdev.workers.dev/https://reddit.com/r/${slug}`,
+    {
+      parseResponse: (txt) => txt,
+    },
   )
-
-  // h1 with "r/solana" text
-  await page.waitForSelector("h1:has-text('r/solana')")
-
-  const html = await page.content()
-  browser.close()
 
   const document = getDocument(html)
 
