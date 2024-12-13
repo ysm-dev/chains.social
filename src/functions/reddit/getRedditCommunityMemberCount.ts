@@ -11,7 +11,7 @@ export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
   const document = getDocument(html)
 
   const targetH1 = Array.from(document.querySelectorAll("h1")).find(
-    (h1) => h1.textContent.trim() === "r/solana",
+    (h1) => h1.textContent.trim() === `r/${slug}`,
   )
 
   if (!targetH1 || !targetH1.parentElement) {

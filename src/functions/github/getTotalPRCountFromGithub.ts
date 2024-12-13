@@ -1,4 +1,5 @@
-import { getGithubRepositoryPRs } from "@/functions/github/getGithubRepositoryPRs"
+import { env } from "@/lib/env"
+import { ofetch } from "ofetch"
 
 export const getTotalPRCountFromGithub = async (
   githubRepositoryLink: string,
@@ -7,12 +8,20 @@ export const getTotalPRCountFromGithub = async (
     .split("/")
     .reverse()
 
-  const response = await getGithubRepositoryPRs(
-    organizationName,
-    repositoryName,
-  )
+  const response = await ofetch<{
+    total_count: number
+  }>(`https://api.github.com/search/issues`, {
+    query: {
+      q: `repo:${organizationName}/${repositoryName} is:pr`,
+      page: 1,
+      per_page: 1,
+    },
+    headers: {
+      Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
+    },
+  })
 
-  const { totalPRCount } = response
+  const { total_count } = response
 
-  return totalPRCount
+  return total_count
 }

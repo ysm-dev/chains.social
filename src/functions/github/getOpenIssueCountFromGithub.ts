@@ -1,4 +1,5 @@
-import { getGithubRepositoryIssues } from "@/functions/github/getGithubRepositoryIssues"
+import { env } from "@/lib/env"
+import { ofetch } from "ofetch"
 
 export const getOpenIssueCountFromGithub = async (
   githubRepositoryLink: string,
@@ -7,12 +8,20 @@ export const getOpenIssueCountFromGithub = async (
     .split("/")
     .reverse()
 
-  const response = await getGithubRepositoryIssues(
-    organizationName,
-    repositoryName,
-  )
+  const response = await ofetch<{
+    total_count: number
+  }>(`https://api.github.com/search/issues`, {
+    query: {
+      q: `repo:${organizationName}/${repositoryName} is:issue is:open`,
+      page: 1,
+      per_page: 1,
+    },
+    headers: {
+      Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
+    },
+  })
 
-  const { openIssueCount } = response
+  const { total_count } = response
 
-  return openIssueCount
+  return total_count
 }
