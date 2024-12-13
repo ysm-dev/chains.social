@@ -10,6 +10,7 @@ export const env = createEnv({
     YOUTUBE_DATA_API_KEY: z.string().min(1),
     REDDIT_CLIENT_SECRET: z.string().min(1),
     GITHUBPAT_TOKEN: z.string().min(1),
+    COUNT_API_KEY: z.string().min(1),
   },
 
   /**

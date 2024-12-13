@@ -1,12 +1,9 @@
 import { getYoutubeChannelInfo } from "@/functions/youtube/getYoutubeChannelInfo"
-import { getLastSegment } from "@/utils/getLastSegment"
 
-export const getVideoCountFromYoutube = async (youtubeLink: string) => {
-  const channelId = getLastSegment(youtubeLink)
-
+export const getVideoCountFromYoutube = async (youtubeChannelId: string) => {
   const {
     statistics: { videoCount },
-  } = await getYoutubeChannelInfo(channelId)
+  } = await getYoutubeChannelInfo(youtubeChannelId)
 
   return +videoCount
 }

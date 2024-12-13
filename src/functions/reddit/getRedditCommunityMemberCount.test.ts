@@ -2,8 +2,14 @@ import { getRedditCommunityMemberCount } from "@/functions/reddit/getRedditCommu
 import { describe, expect, it } from "vitest"
 
 describe("getRedditCommunityMemberCount", () => {
-  it("solana", async () => {
+  it.skip("solana", async () => {
     const memberCount = await getRedditCommunityMemberCount("solana")
+
+    expect(memberCount).toBeGreaterThan(0)
+  })
+
+  it("polkadot", async () => {
+    const memberCount = await getRedditCommunityMemberCount("Polkadot")
 
     expect(memberCount).toBeGreaterThan(0)
   })

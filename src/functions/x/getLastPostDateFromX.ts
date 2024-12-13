@@ -9,5 +9,5 @@ export const getLastPostDateFromX = async (xLink: string) => {
   const { rest_id } = await getXUserInfo(screenName)
   const { lastPostDate } = await getXUserPosts(rest_id)
 
-  return lastPostDate
+  return new Date(lastPostDate).toISOString()
 }

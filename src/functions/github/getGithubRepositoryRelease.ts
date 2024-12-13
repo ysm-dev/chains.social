@@ -9,16 +9,21 @@ import { z } from "zod"
 */
 export const getGithubRepositoryRelease = memoize(
   async (organizationName: string, repositoryName: string) => {
-    const response = await ofetch<GetGithubRepositoryResponse>(
+    const response = await ofetch.raw<GetGithubRepositoryResponse>(
       `https://api.github.com/repos/${organizationName}/${repositoryName}/releases/latest`,
       {
         headers: {
           Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
+        ignoreResponseError: true,
       },
     )
 
-    return getGithubRepositoryReleaseSchema.parse(response)
+    if (response.status === 404) {
+      return null
+    }
+
+    return getGithubRepositoryReleaseSchema.parse(response._data)
   },
 )
 

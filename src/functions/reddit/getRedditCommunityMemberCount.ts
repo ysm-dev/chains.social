@@ -15,7 +15,7 @@ export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
   )
 
   if (!targetH1 || !targetH1.parentElement) {
-    throw new Error('No <h1> tag with "r/solana" found.')
+    throw new Error(`No <h1> tag with "r/${slug}" found.`)
   }
 
   const siblingWithMembers = Array.from(targetH1.parentElement.children).find(

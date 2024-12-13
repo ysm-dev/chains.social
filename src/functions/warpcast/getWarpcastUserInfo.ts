@@ -23,7 +23,6 @@ const getWrapcasetUserInfoSchema = z.object({
   result: z.object({
     user: z.object({
       fid: z.number(),
-      username: z.string(),
       followerCount: z.number(),
       followingCount: z.number(),
     }),

@@ -1,8 +1,8 @@
 import { getDiscordInviteInfo } from "@/functions/discord/getDiscordInviteInfo"
 import { describe, expect, it, vi } from "vitest"
 
-describe("getDiscordInviteInfo function format tests", () => {
-  it("should match the expected response format", async () => {
+describe("getDiscordInviteInfo", () => {
+  it("solana", async () => {
     const inviteId = "solana"
 
     const response = await getDiscordInviteInfo(inviteId)

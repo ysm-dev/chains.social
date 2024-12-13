@@ -9,4 +9,12 @@ describe("getYoutubeChannelInfo function format tests", () => {
 
     expect(response.id).toBe(channelId)
   })
+
+  it("near", async () => {
+    const channelId = "UCuKdIYVN8iE3fv8alyk1aMw"
+
+    const response = await getYoutubeChannelInfo(channelId)
+
+    expect(response.id).toBe(channelId)
+  })
 })

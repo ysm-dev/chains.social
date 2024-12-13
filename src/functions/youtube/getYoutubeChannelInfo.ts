@@ -9,17 +9,16 @@ import { z } from "zod"
 */
 export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
   const response = await ofetch<getYoutubeChannelInfoResponse>(
-    `https://www.googleapis.com/youtube/v3/channels`,
+    `https://api.subcount.app/channel/info/${channelId}`,
     {
-      query: {
-        part: "statistics",
-        id: channelId,
-        key: env.YOUTUBE_DATA_API_KEY,
+      headers: {
+        authorization: `Basic ${env.COUNT_API_KEY}`,
+        origin: "https://subscribercounter.com",
       },
     },
   )
 
-  const data = getYoutubeChannelInfoSchema.parse(response)
+  const { data } = getYoutubeChannelInfoSchema.parse(response)
 
   const channelData = data.items.find((v) => v.id === channelId)
   if (!channelData) {
@@ -30,27 +29,24 @@ export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
 })
 
 export const getYoutubeChannelInfoSchema = z.object({
-  kind: z.string(),
-  etag: z.string(),
-  pageInfo: z.object({
-    totalResults: z.number(),
-    resultsPerPage: z.number(),
-  }),
-  items: z
-    .array(
-      z.object({
-        kind: z.string(),
-        etag: z.string(),
-        id: z.string(),
-        statistics: z.object({
-          viewCount: z.string(),
-          subscriberCount: z.string(),
-          hiddenSubscriberCount: z.boolean(),
-          videoCount: z.string(),
+  success: z.boolean(),
+  data: z.object({
+    items: z
+      .array(
+        z.object({
+          kind: z.string(),
+          etag: z.string(),
+          id: z.string(),
+          statistics: z.object({
+            viewCount: z.string(),
+            subscriberCount: z.string(),
+            hiddenSubscriberCount: z.boolean(),
+            videoCount: z.string(),
+          }),
         }),
-      }),
-    )
-    .min(1),
+      )
+      .min(1),
+  }),
 })
 
 export type getYoutubeChannelInfoResponse = z.infer<

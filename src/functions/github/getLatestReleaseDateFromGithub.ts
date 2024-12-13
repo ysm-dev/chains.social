@@ -7,10 +7,10 @@ export const getLatestReleaseDateFromGithub = async (
     .split("/")
     .reverse()
 
-  const { published_at } = await getGithubRepositoryRelease(
+  const data = await getGithubRepositoryRelease(
     organizationName,
     repositoryName,
   )
 
-  return published_at
+  return data ? new Date(data.published_at).toISOString() : null
 }

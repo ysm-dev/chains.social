@@ -7,10 +7,10 @@ export const getLatestReleaseNameFromGithub = async (
     .split("/")
     .reverse()
 
-  const { name } = await getGithubRepositoryRelease(
+  const data = await getGithubRepositoryRelease(
     organizationName,
     repositoryName,
   )
 
-  return name
+  return data ? data.name : null
 }

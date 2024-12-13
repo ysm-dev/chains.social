@@ -3,9 +3,9 @@ import { getLastSegment } from "@/utils/getLastSegment"
 import { discordURLSchema } from "@/validators/discord"
 
 export const getMemberCountFromDiscord = async (discordUrl: string) => {
-  const validUrl = discordURLSchema.parse(discordUrl)
+  const isValid = discordURLSchema.parse(discordUrl)
 
-  const inviteId = getLastSegment(validUrl)
+  const inviteId = getLastSegment(isValid)
   const res = await getDiscordInviteInfo(inviteId)
 
   const { approximate_member_count } = res

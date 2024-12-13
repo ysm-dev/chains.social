@@ -7,8 +7,6 @@ describe("getTotalPRCountFromGithub", () => {
 
     const response = await getTotalPRCountFromGithub(githubRepositoryUrl)
 
-    console.log({ response })
-
     expect(response).toBeGreaterThan(0)
   })
 })
