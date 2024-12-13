@@ -6,7 +6,7 @@ export const discordURLSchema = z.custom<string>((param) => {
   const { hostname, pathname } = new URL(url)
 
   return (
-    hostname === "discord.com" &&
+    (hostname === "discord.com" || hostname === "discord.gg") &&
     pathname.split("/").length === 3 &&
     pathname.split("/")[1] === "invite"
   )

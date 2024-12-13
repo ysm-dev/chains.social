@@ -50,7 +50,7 @@ import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
 
 async function main() {
   const data = {
-    discoardLink: "https://discord.gg/buildonbase",
+    discoardLink: "https://discord.com/invite/AY7yq3gyHq",
     githubOrganizationLink: "https://github.com/base-org",
     githubRepositoryLink: "https://github.com/base-org/node",
     npmLink: "https://www.npmjs.com/package/@solana/web3.js",
