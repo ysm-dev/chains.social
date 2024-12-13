@@ -1,6 +1,6 @@
+import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 
 /*
   x-ratelimit-limit: none

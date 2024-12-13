@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest"
 
 describe("getDiscordInviteInfo function format tests", () => {
   it("should match the expected response format", async () => {
-    const inviteId = "buildonbase"
+    const inviteId = "solana"
 
     const response = await getDiscordInviteInfo(inviteId)
 

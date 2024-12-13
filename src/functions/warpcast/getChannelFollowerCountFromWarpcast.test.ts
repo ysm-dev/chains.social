@@ -1,5 +1,4 @@
-import { getMemberCountFromReddit } from "@/functions/reddit/getMemberCountFromReddit"
-import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
+import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast"
 import { describe, expect, it } from "vitest"
 
 describe("getChannelFollowerCountFromWarpcast", () => {

@@ -1,9 +1,6 @@
 import { getWarpcastChannelInfo } from "@/functions/warpcast/getWarpcastChannelInfo"
 import { getLastSegment } from "@/utils/getLastSegment"
-import {
-  warpcastChannelURLSchema,
-  warpcastURLSchema,
-} from "@/validators/warpcast"
+import { warpcastChannelURLSchema } from "@/validators/warpcast"
 
 export const getChannelFollowerCountFromWarpcast = async (
   warpcastChannelLink: string,

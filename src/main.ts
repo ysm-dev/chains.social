@@ -30,7 +30,7 @@ import { getMonthlyWebsiteVisitorCountFromSim } from "@/functions/sim/getMonthly
 import { getWebsiteTopCountrySharesFromSim } from "@/functions/sim/getWebsiteTopCountrySharesFromSim"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
-import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
+import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast"
 import { getChannelFollowingCountFromWarpcast } from "@/functions/warpcast/getChannelFollowingCountFromWarpcast"
 import { getChannelLastCastDateFromWarpcast } from "@/functions/warpcast/getChannelLastCastDateFromWarpcast"
 import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
@@ -50,7 +50,7 @@ import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
 
 async function main() {
   const data = {
-    discoardLink: "https://discord.gg/buildonbase",
+    discoardLink: "https://discord.com/invite/AY7yq3gyHq",
     githubOrganizationLink: "https://github.com/base-org",
     githubRepositoryLink: "https://github.com/base-org/node",
     npmLink: "https://www.npmjs.com/package/@solana/web3.js",
