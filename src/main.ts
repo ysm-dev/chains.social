@@ -30,7 +30,7 @@ import { getMonthlyWebsiteVisitorCountFromSim } from "@/functions/sim/getMonthly
 import { getWebsiteTopCountrySharesFromSim } from "@/functions/sim/getWebsiteTopCountrySharesFromSim"
 import { getMemberCountFromTelegram } from "@/functions/telegram/getMemberCountFromTelegram"
 import { getOnlineCountFromTelegram } from "@/functions/telegram/getOnlineCountFromTelegram"
-import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast copy"
+import { getChannelFollowerCountFromWarpcast } from "@/functions/warpcast/getChannelFollowerCountFromWarpcast"
 import { getChannelFollowingCountFromWarpcast } from "@/functions/warpcast/getChannelFollowingCountFromWarpcast"
 import { getChannelLastCastDateFromWarpcast } from "@/functions/warpcast/getChannelLastCastDateFromWarpcast"
 import { getFollowerCountFromWarpcast } from "@/functions/warpcast/getFollowerCountFromWarpcast"
