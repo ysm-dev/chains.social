@@ -1,4 +1,3 @@
-import { getGithubRepositoryIssues } from "@/functions/github/getGithubRepositoryIssues"
 import { getGithubRepositoryRelease } from "@/functions/github/getGithubRepositoryRelease"
 import { describe, expect, it, vi } from "vitest"
 

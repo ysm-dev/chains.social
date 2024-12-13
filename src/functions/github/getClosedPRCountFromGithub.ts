@@ -1,4 +1,5 @@
-import { getGithubRepositoryPRs } from "@/functions/github/getGithubRepositoryPRs"
+import { env } from "@/lib/env"
+import { ofetch } from "ofetch"
 
 export const getClosedPRCountFromGithub = async (
   githubRepositoryLink: string,
@@ -7,12 +8,20 @@ export const getClosedPRCountFromGithub = async (
     .split("/")
     .reverse()
 
-  const response = await getGithubRepositoryPRs(
-    organizationName,
-    repositoryName,
-  )
+  const response = await ofetch<{
+    total_count: number
+  }>(`https://api.github.com/search/issues`, {
+    query: {
+      q: `repo:${organizationName}/${repositoryName} is:pr is:closed`,
+      page: 1,
+      per_page: 1,
+    },
+    headers: {
+      Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
+    },
+  })
 
-  const { closedPRCount } = response
+  const { total_count } = response
 
-  return closedPRCount
+  return total_count
 }
