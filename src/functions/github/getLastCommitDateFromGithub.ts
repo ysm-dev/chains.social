@@ -1,6 +1,5 @@
 import { getGithubRepositoryBranch } from "@/functions/github/getGithubRepositoryBranch"
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
-import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getLastCommitDateFromGithub = async (
   githubRepositoryLink: string,
@@ -20,5 +19,5 @@ export const getLastCommitDateFromGithub = async (
     default_branch,
   )
 
-  return lastCommitDate
+  return new Date(lastCommitDate).toISOString()
 }

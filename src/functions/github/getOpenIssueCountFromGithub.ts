@@ -1,5 +1,5 @@
 import { env } from "@/lib/env"
-import { ofetch } from "ofetch"
+import { ofetch } from "@/lib/ofetch"
 
 export const getOpenIssueCountFromGithub = async (
   githubRepositoryLink: string,

@@ -1,10 +1,10 @@
+import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
 import { githubOrgURLSchema, githubRepoURLSchema } from "@/validators/github"
 import { subredditURLSchema } from "@/validators/reddit"
 import { telegramURLSchema } from "@/validators/telegram"
 import { entries, filter, first, fromEntries, map, pipe } from "@fxts/core"
 import { destr } from "destr"
-import { ofetch } from "ofetch"
 
 export const getMetadataFromCMC = async (slug: string) => {
   const html = await ofetch(`https://coinmarketcap.com/currencies/${slug}`, {

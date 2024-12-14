@@ -1,6 +1,6 @@
 import { env } from "@/lib/env"
+import { ofetch } from "@/lib/ofetch"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 /*

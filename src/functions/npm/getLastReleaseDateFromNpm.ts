@@ -8,5 +8,5 @@ export const getLastReleaseDateFromNpm = async (npmLink: string) => {
 
   const data = await getNpmPackageInfo(packageName)
 
-  return data.time.modified
+  return new Date(data.time.modified).toISOString()
 }

@@ -1,5 +1,5 @@
+import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
-import { ofetch } from "ofetch"
 
 export const getYoutubeChannelFromWebsite = async (url: string) => {
   const html = await ofetch(url, { parseResponse: (txt) => txt })

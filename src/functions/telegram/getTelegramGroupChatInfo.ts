@@ -18,10 +18,20 @@ export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
     throw new Error("Element not found")
   }
 
-  const [members, online] = element.textContent!.split(", ")
+  if (element.textContent!.includes("online")) {
+    const [members, online] = element.textContent!.split(", ")
 
-  const memberCount = +members.replace(" members", "").replace(" ", "")
-  const onlineCount = +online.replace(" online", "").replace(" ", "")
+    const memberCount = +members.replace(" members", "").replace(" ", "")
+    const onlineCount = +online.replace(" online", "").replace(" ", "")
 
-  return { memberCount, onlineCount }
+    return { memberCount, onlineCount }
+  } else if (element.textContent!.includes("subscribers")) {
+    const subscriberCount = +element
+      .textContent!.replace(" subscribers", "")
+      .replace(" ", "")
+
+    return { memberCount: subscriberCount, onlineCount: null }
+  }
+
+  throw new Error("Unknown type")
 })

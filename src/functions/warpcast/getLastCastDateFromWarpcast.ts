@@ -12,5 +12,9 @@ export const getLastCastDateFromWarpcast = async (warpcastLink: string) => {
 
   const response = await getWarpcastUserCasts(userInfo.result.user.fid)
 
+  if (response.result.casts.length === 0) {
+    return null
+  }
+
   return new Date(response.result.casts[0].timestamp).toISOString()
 }

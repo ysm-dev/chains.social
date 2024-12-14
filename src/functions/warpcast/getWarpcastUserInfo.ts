@@ -1,5 +1,5 @@
+import { ofetch } from "@/lib/ofetch"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 /*
@@ -23,7 +23,6 @@ const getWrapcasetUserInfoSchema = z.object({
   result: z.object({
     user: z.object({
       fid: z.number(),
-      username: z.string(),
       followerCount: z.number(),
       followingCount: z.number(),
     }),

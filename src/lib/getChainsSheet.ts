@@ -1,4 +1,5 @@
-import { ofetch } from "ofetch"
+import { ofetch } from "@/lib/ofetch"
+import { map, pipe, toArray } from "@fxts/core"
 import { z } from "zod"
 
 export const getChainsSheet = async () => {
@@ -22,39 +23,70 @@ export const getChainsSheet = async () => {
   const dataRows = rows.slice(1)
 
   const jsonArray = dataRows.map((row) => {
-    const obj: { [key: string]: string } = {}
+    const obj: { [key: string]: string | null } = {}
     headers.forEach((header, index) => {
-      obj[header] = row[index].replace(/^"|"$/g, "").trim() || "" // 값이 없으면 빈 문자열
+      obj[header] = row[index].replace(/^"|"$/g, "").trim() || null // 값이 없으면 빈 문자열
     })
     return obj
   })
 
-  return getChainsSheetSchema.parse(jsonArray)
+  const data = getChainsSheetSchema.parse(jsonArray)
+
+  return pipe(
+    data,
+    map((v) => ({
+      name: v.Name,
+      slug: v["Key (slug)"],
+      type: v.type,
+      symbol: v.Symbol,
+      founder: v.Founder,
+      founded: v.Founded,
+      firstBlock: v.FirstBlock,
+      hq: v.HQ,
+      isMainnet: v.isMainnet,
+      websiteUrl: v.Website,
+      gitHubOrganizationUrl: v.GitHub,
+      gitHubRepositoryUrl: v["GitHub main repo"],
+      xUrl: v["𝕏"],
+      linkedInUrl: v.LinkedIn,
+      youtubeUrl: v.Youtube,
+      youtubeChannelId: v["Youtube Channel ID"],
+      telegramUrl: v.Telegram,
+      discordUrl: v.Discord,
+      redditUrl: v.Reddit,
+      warpcastProfileUrl: v["Farcaster Profile"],
+      warpcastChannelUrl: v["Farcaster Channel"],
+      blogUrl: v.Blog,
+      npmUrl: v.Npm,
+    })),
+    toArray,
+  )
 }
 
 const getChainsSheetSchema = z.array(
   z.object({
-    Name: z.string().optional(),
-    Key: z.string().optional(),
-    type: z.string().optional(),
-    Symbol: z.string().optional(),
-    Founder: z.string().optional(),
-    Founded: z.string().optional(),
-    FirstBlock: z.string().optional(),
-    HQ: z.string().optional(),
-    isMainnet: z.string().optional(),
-    Website: z.string().optional(),
-    GitHub: z.string().optional(),
-    ["GitHub main repo"]: z.string().optional(),
-    X: z.string().optional(),
-    LinkedIn: z.string().optional(),
-    Youtube: z.string().optional(),
-    Telegram: z.string().optional(),
-    Discord: z.string().optional(),
-    Reddit: z.string().optional(),
-    ["Farcaster Profile"]: z.string().optional(),
-    ["Farcaster Channel"]: z.string().optional(),
-    Blog: z.string().optional(),
-    ["JS Library"]: z.string().optional(),
+    Name: z.string().nullable(),
+    ["Key (slug)"]: z.string().nullable(),
+    type: z.string().nullable(),
+    Symbol: z.string().nullable(),
+    Founder: z.string().nullable(),
+    Founded: z.string().nullable(),
+    FirstBlock: z.string().nullable(),
+    HQ: z.string().nullable(),
+    isMainnet: z.string().nullable(),
+    Website: z.string().nullable(),
+    GitHub: z.string().nullable(),
+    ["GitHub main repo"]: z.string().nullable(),
+    𝕏: z.string().nullable(),
+    LinkedIn: z.string().nullable(),
+    Youtube: z.string().nullable(),
+    ["Youtube Channel ID"]: z.string().nullable(),
+    Telegram: z.string().nullable(),
+    Discord: z.string().nullable(),
+    Reddit: z.string().nullable(),
+    ["Farcaster Profile"]: z.string().nullable(),
+    ["Farcaster Channel"]: z.string().nullable(),
+    Blog: z.string().nullable(),
+    Npm: z.string().nullable(),
   }),
 )

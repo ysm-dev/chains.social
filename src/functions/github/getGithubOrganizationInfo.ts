@@ -1,6 +1,6 @@
 import { env } from "@/lib/env"
+import { ofetch } from "@/lib/ofetch"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 import type { aC } from "vitest/dist/chunks/reporters.D7Jzd9GS.js"
 import { z } from "zod"
 
@@ -25,7 +25,7 @@ export const getGithubOrganizationInfo = memoize(
 
 export const getGithubOrganizationInfoSchema = z.object({
   login: z.string(),
-  name: z.string(),
+  name: z.string().nullable(),
   public_repos: z.number(),
   followers: z.number(),
   type: z.string(),

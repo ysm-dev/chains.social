@@ -1,7 +1,7 @@
 import { getRedditAccessToken } from "@/functions/reddit/getRedditAccessToken"
+import { ofetch } from "@/lib/ofetch"
 import { defaultBrowserHeaders } from "@/utils/defaultBrowserHeaders"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 /*

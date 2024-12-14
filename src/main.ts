@@ -44,202 +44,279 @@ import { getLastVideoDateFromYoutube } from "@/functions/youtube/getLastVideoDat
 import { getSubscriberCountFromYoutube } from "@/functions/youtube/getSubscriberCountFromYoutube"
 import { getVideoCountFromYoutube } from "@/functions/youtube/getVideoCountFromYoutube"
 import { getViewCountFromYoutube } from "@/functions/youtube/getViewCountFromYoutube"
+import { getChainsSheet } from "@/lib/getChainsSheet"
 import { storage } from "@/lib/unstorage"
 import { isLocal } from "@/utils/isLocal"
-import { concurrent, pipe, toArray, toAsync } from "@fxts/core"
+import { concurrent, drop, map, pipe, take, toArray, toAsync } from "@fxts/core"
 
 async function main() {
-  const data = {
-    discoardLink: "https://discord.com/invite/AY7yq3gyHq",
-    githubOrganizationLink: "https://github.com/base-org",
-    githubRepositoryLink: "https://github.com/base-org/node",
-    npmLink: "https://www.npmjs.com/package/@solana/web3.js",
-    youtubeLink: "https://youtube.com/channel/UC9AdQPUe4BdVJ8M9X7wxHUA",
-    xLink: "https://x.com/solana",
-    telegramLink: "https://t.me/solana",
-    redditLink: "https://reddit.com/r/solana",
-    warpcastLink: "https://warpcast.com/solana",
-    wrapcastChannelLink: "https://warpcast.com/~/channel/solana",
-    officialLink: "https://solana.com",
-  }
+  const chains = await getChainsSheet()
 
-  const [
-    memberCount,
-    onlineCount,
-    followerCount,
-    publicRepositoryCount,
-    starCount,
-    forkCount,
-    watcherCount,
-    commitByUserCount,
-    commitByBotCount,
-    contributorCount,
-    totalIssueCount,
-    openIssueCount,
-    closedIssueCount,
-    lastWeekDownloadCount,
-    lastDayDownloadCount,
-    viewCount,
-    videoCount,
-    subscriberCount,
-    xFollowerCount,
-    xFollowingCount,
-    telegramMemberCount,
-    telegramOnlineCount,
-    postCount,
-    redditMemberCount,
-    warpcastFollowerCount,
-    warpcastFollowingCount,
-    openPRCount,
-    closedPRCount,
-    totalPRCount,
-    wrapcastChannelFollowerCount,
-    wrapcastChannelFollowingCount,
-    monthlyWebsiteVisitorCount,
-    globalWebsiteRank,
-  ] = await pipe(
-    [
-      getMemberCountFromDiscord(data.discoardLink),
-      getOnlineCountFromDiscord(data.discoardLink),
-      getFollowerCountFromGithub(data.githubOrganizationLink),
-      getPublicRepositoryCountFromGithub(data.githubOrganizationLink),
-      getStarCountFromGithub(data.githubRepositoryLink),
-      getForkCountFromGithub(data.githubRepositoryLink),
-      getWatcherCountFromGithub(data.githubRepositoryLink),
-      getCommitByUserCountFromGithub(data.githubRepositoryLink),
-      getCommitByBotCountFromGithub(data.githubRepositoryLink),
-      getContributorCountFromGithub(data.githubRepositoryLink),
-      getTotalIssueCountFromGithub(data.githubRepositoryLink),
-      getOpenIssueCountFromGithub(data.githubRepositoryLink),
-      getClosedIssueCountFromGithub(data.githubRepositoryLink),
-      getLastWeekDownloadCountFromNpm(data.npmLink),
-      getLastDayDownloadCountFromNpm(data.npmLink),
-      getViewCountFromYoutube(data.youtubeLink),
-      getVideoCountFromYoutube(data.youtubeLink),
-      getSubscriberCountFromYoutube(data.youtubeLink),
-      getFollowerCountFromX(data.xLink),
-      getFollowingCountFromX(data.xLink),
-      getMemberCountFromTelegram(data.telegramLink),
-      getOnlineCountFromTelegram(data.telegramLink),
-      getPostCountFromX(data.xLink),
-      getMemberCountFromReddit(data.redditLink),
-      getFollowerCountFromWarpcast(data.warpcastLink),
-      getFollowingCountFromWarpcast(data.warpcastLink),
-      getOpenPRCountFromGithub(data.githubRepositoryLink),
-      getClosedPRCountFromGithub(data.githubRepositoryLink),
-      getTotalPRCountFromGithub(data.githubRepositoryLink),
-      getChannelFollowerCountFromWarpcast(data.wrapcastChannelLink),
-      getChannelFollowingCountFromWarpcast(data.wrapcastChannelLink),
-      getMonthlyWebsiteVisitorCountFromSim(data.officialLink),
-      getGlobalWebsiteRankFromSim(data.officialLink),
-    ],
+  const result = await pipe(
+    chains,
     toAsync,
-    concurrent(10000),
+    map(async (data) => {
+      console.log(JSON.stringify(data, null, 2))
+
+      const [
+        memberCount,
+        onlineCount,
+        followerCount,
+        publicRepositoryCount,
+        starCount,
+        forkCount,
+        watcherCount,
+        commitByUserCount,
+        commitByBotCount,
+        contributorCount,
+        totalIssueCount,
+        openIssueCount,
+        closedIssueCount,
+        lastWeekDownloadCount,
+        lastDayDownloadCount,
+        viewCount,
+        videoCount,
+        subscriberCount,
+        xFollowerCount,
+        xFollowingCount,
+        telegramMemberCount,
+        telegramOnlineCount,
+        postCount,
+        redditMemberCount,
+        warpcastFollowerCount,
+        warpcastFollowingCount,
+        openPRCount,
+        closedPRCount,
+        totalPRCount,
+        wrapcastChannelFollowerCount,
+        wrapcastChannelFollowingCount,
+        monthlyWebsiteVisitorCount,
+        globalWebsiteRank,
+      ] = await pipe(
+        [
+          data.discordUrl
+            ? getMemberCountFromDiscord(data.discordUrl)
+            : Promise.resolve(null),
+          data.discordUrl
+            ? getOnlineCountFromDiscord(data.discordUrl)
+            : Promise.resolve(null),
+          data.gitHubOrganizationUrl
+            ? getFollowerCountFromGithub(data.gitHubOrganizationUrl)
+            : Promise.resolve(null),
+          data.gitHubOrganizationUrl
+            ? getPublicRepositoryCountFromGithub(data.gitHubOrganizationUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getStarCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getForkCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getWatcherCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getCommitByUserCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getCommitByBotCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getContributorCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getTotalIssueCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getOpenIssueCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getClosedIssueCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.npmUrl
+            ? getLastWeekDownloadCountFromNpm(data.npmUrl)
+            : Promise.resolve(null),
+          data.npmUrl
+            ? getLastDayDownloadCountFromNpm(data.npmUrl)
+            : Promise.resolve(null),
+          data.youtubeChannelId
+            ? getViewCountFromYoutube(data.youtubeChannelId)
+            : Promise.resolve(null),
+          data.youtubeChannelId
+            ? getVideoCountFromYoutube(data.youtubeChannelId)
+            : Promise.resolve(null),
+          data.youtubeChannelId
+            ? getSubscriberCountFromYoutube(data.youtubeChannelId)
+            : Promise.resolve(null),
+          data.xUrl ? getFollowerCountFromX(data.xUrl) : Promise.resolve(null),
+          data.xUrl ? getFollowingCountFromX(data.xUrl) : Promise.resolve(null),
+          data.telegramUrl
+            ? getMemberCountFromTelegram(data.telegramUrl)
+            : Promise.resolve(null),
+          data.telegramUrl
+            ? getOnlineCountFromTelegram(data.telegramUrl)
+            : Promise.resolve(null),
+          data.xUrl ? getPostCountFromX(data.xUrl) : Promise.resolve(null),
+          data.redditUrl
+            ? getMemberCountFromReddit(data.redditUrl)
+            : Promise.resolve(null),
+          data.warpcastProfileUrl
+            ? getFollowerCountFromWarpcast(data.warpcastProfileUrl)
+            : Promise.resolve(null),
+          data.warpcastProfileUrl
+            ? getFollowingCountFromWarpcast(data.warpcastProfileUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getOpenPRCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getClosedPRCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getTotalPRCountFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.warpcastChannelUrl
+            ? getChannelFollowerCountFromWarpcast(data.warpcastChannelUrl)
+            : Promise.resolve(null),
+          data.warpcastChannelUrl
+            ? getChannelFollowingCountFromWarpcast(data.warpcastChannelUrl)
+            : Promise.resolve(null),
+          data.websiteUrl
+            ? getMonthlyWebsiteVisitorCountFromSim(data.websiteUrl)
+            : Promise.resolve(null),
+          data.websiteUrl
+            ? getGlobalWebsiteRankFromSim(data.websiteUrl)
+            : Promise.resolve(null),
+        ],
+        toAsync,
+        concurrent(10000),
+        toArray,
+      )
+
+      const [
+        lastCommitDate,
+        latestReleaseDate,
+        latestReleaseName,
+        lastReleaseDate,
+        lastReleaseVersion,
+        lastVideoDate,
+        lastPostDate,
+        redditLastPostDate,
+        lastCastDate,
+        channelLastCastDate,
+      ] = await pipe(
+        [
+          data.gitHubRepositoryUrl
+            ? getLastCommitDateFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getLatestReleaseDateFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.gitHubRepositoryUrl
+            ? getLatestReleaseNameFromGithub(data.gitHubRepositoryUrl)
+            : Promise.resolve(null),
+          data.npmUrl
+            ? getLastReleaseDateFromNpm(data.npmUrl)
+            : Promise.resolve(null),
+
+          data.npmUrl
+            ? getLastReleaseVersionFromNpm(data.npmUrl)
+            : Promise.resolve(null),
+          data.youtubeChannelId
+            ? getLastVideoDateFromYoutube(data.youtubeChannelId)
+            : Promise.resolve(null),
+          data.xUrl ? getLastPostDateFromX(data.xUrl) : Promise.resolve(null),
+          data.redditUrl
+            ? getLastPostDateFromReddit(data.redditUrl)
+            : Promise.resolve(null),
+          data.warpcastProfileUrl
+            ? getLastCastDateFromWarpcast(data.warpcastProfileUrl)
+            : Promise.resolve(null),
+          data.warpcastChannelUrl
+            ? getChannelLastCastDateFromWarpcast(data.warpcastChannelUrl)
+            : Promise.resolve(null),
+        ],
+        toAsync,
+        concurrent(10000),
+        toArray,
+      )
+
+      const websiteTopCountryShares = data.websiteUrl
+        ? await getWebsiteTopCountrySharesFromSim(data.websiteUrl)
+        : null
+
+      return {
+        chainSlug: data.slug,
+
+        website: {
+          monthlyWebsiteVisitorCount,
+          globalWebsiteRank,
+          websiteTopCountryShares,
+        },
+        discord: {
+          memberCount,
+          onlineCount,
+        },
+        github: {
+          followerCount,
+          publicRepositoryCount,
+          starCount,
+          forkCount,
+          watcherCount,
+          commitByUserCount,
+          commitByBotCount,
+          contributorCount,
+          totalIssueCount,
+          openIssueCount,
+          closedIssueCount,
+          lastCommitDate,
+          latestReleaseDate,
+          latestReleaseName,
+          openPRCount,
+          closedPRCount,
+          totalPRCount,
+        },
+        npm: {
+          lastDayDownloadCount,
+          lastWeekDownloadCount,
+          lastReleaseDate,
+          lastReleaseVersion,
+        },
+        youtube: {
+          viewCount,
+          videoCount,
+          subscriberCount,
+          lastVideoDate,
+        },
+        x: {
+          followerCount: xFollowerCount,
+          followingCount: xFollowingCount,
+          lastPostDate,
+          postCount,
+        },
+        telegram: {
+          memberCount: telegramMemberCount,
+          onlineCount: telegramOnlineCount,
+        },
+        reddit: {
+          memberCount: redditMemberCount,
+          lastPostDate: redditLastPostDate,
+        },
+        warpcast: {
+          followerCount: warpcastFollowerCount,
+          followingCount: warpcastFollowingCount,
+          lastCastDate,
+          channelFollowerCount: wrapcastChannelFollowerCount,
+          channelFollowingCount: wrapcastChannelFollowingCount,
+          channelLastCastDate,
+        },
+      }
+    }),
     toArray,
   )
-
-  const [
-    lastCommitDate,
-    latestReleaseDate,
-    latestReleaseName,
-    lastReleaseDate,
-    lastReleaseVersion,
-    lastVideoDate,
-    lastPostDate,
-    redditLastPostDate,
-    lastCastDate,
-    channelLastCastDate,
-  ] = await pipe(
-    [
-      getLastCommitDateFromGithub(data.githubRepositoryLink),
-      getLatestReleaseDateFromGithub(data.githubRepositoryLink),
-      getLatestReleaseNameFromGithub(data.githubRepositoryLink),
-      getLastReleaseDateFromNpm(data.npmLink),
-      getLastReleaseVersionFromNpm(data.npmLink),
-      getLastVideoDateFromYoutube(data.youtubeLink),
-      getLastPostDateFromX(data.xLink),
-      getLastPostDateFromReddit(data.redditLink),
-      getLastCastDateFromWarpcast(data.warpcastLink),
-      getChannelLastCastDateFromWarpcast(data.wrapcastChannelLink),
-    ],
-    toAsync,
-    concurrent(10000),
-    toArray,
-  )
-
-  const websiteTopCountryShares = await getWebsiteTopCountrySharesFromSim(
-    data.officialLink,
-  )
-
-  console.log(`Member count: ${memberCount}`)
-  console.log(`Online count: ${onlineCount}`)
 
   const folder = `${isLocal() ? "tmp" : "base"}/${Date.now()}/data.json`
-
-  await storage.set(folder, {
-    website: {
-      monthlyWebsiteVisitorCount,
-      globalWebsiteRank,
-      websiteTopCountryShares,
-    },
-    discord: {
-      memberCount,
-      onlineCount,
-    },
-    github: {
-      followerCount,
-      publicRepositoryCount,
-      starCount,
-      forkCount,
-      watcherCount,
-      commitByUserCount,
-      commitByBotCount,
-      contributorCount,
-      totalIssueCount,
-      openIssueCount,
-      closedIssueCount,
-      lastCommitDate,
-      latestReleaseDate,
-      latestReleaseName,
-      openPRCount,
-      closedPRCount,
-      totalPRCount,
-    },
-    npm: {
-      lastDayDownloadCount,
-      lastWeekDownloadCount,
-      lastReleaseDate,
-      lastReleaseVersion,
-    },
-    youtube: {
-      viewCount,
-      videoCount,
-      subscriberCount,
-      lastVideoDate,
-    },
-    x: {
-      followerCount: xFollowerCount,
-      followingCount: xFollowingCount,
-      lastPostDate,
-      postCount,
-    },
-    telegram: {
-      memberCount: telegramMemberCount,
-      onlineCount: telegramOnlineCount,
-    },
-    reddit: {
-      memberCount: redditMemberCount,
-      lastPostDate: redditLastPostDate,
-    },
-    warpcast: {
-      followerCount: warpcastFollowerCount,
-      followingCount: warpcastFollowingCount,
-      lastCastDate,
-      channelFollowerCount: wrapcastChannelFollowerCount,
-      channelFollowingCount: wrapcastChannelFollowingCount,
-      channelLastCastDate,
-    },
-  })
+  await storage.set(folder, result)
 }
 
 main()
