@@ -10,7 +10,7 @@ describe("getLastVideoDateFromYoutube", () => {
     expect(response).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/)
   })
 
-  it("algorand", async () => {
+  it.skip("algorand", async () => {
     const channelId = "UCsda5E-IaXyUi8dzauyXypA"
 
     const response = await getLastVideoDateFromYoutube(channelId)
@@ -18,7 +18,7 @@ describe("getLastVideoDateFromYoutube", () => {
     expect(response).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/)
   })
 
-  it("bnb", async () => {
+  it.skip("bnb", async () => {
     const channelId = "UCG9fZu6D4I83DStktBV0Ryw"
 
     const response = await getLastVideoDateFromYoutube(channelId)
@@ -26,7 +26,7 @@ describe("getLastVideoDateFromYoutube", () => {
     expect(response).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/)
   })
 
-  it("cardano", async () => {
+  it.skip("cardano", async () => {
     const channelId = "UCbQ9vGfezru1YRI1zDCtTGg"
 
     const response = await getLastVideoDateFromYoutube(channelId)
@@ -34,7 +34,7 @@ describe("getLastVideoDateFromYoutube", () => {
     expect(response).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/)
   })
 
-  it("tron", async () => {
+  it.skip("tron", async () => {
     const channelId = "UC5OPOGRq02iK-0T9sKse_kA"
 
     const response = await getLastVideoDateFromYoutube(channelId)

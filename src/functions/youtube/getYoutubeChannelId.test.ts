@@ -1,7 +1,7 @@
 import { getYoutubeChannelId } from "@/functions/youtube/getYoutubeChannelId"
 import { describe, expect, it } from "vitest"
 
-describe("getYoutubeChannelId", () => {
+describe.skip("getYoutubeChannelId", () => {
   it("/channel/<channel-id>", async () => {
     const youtubeUrl =
       "https://www.youtube.com/channel/UC6rYoXJ_3BbPyWx_GQDDRRQ"

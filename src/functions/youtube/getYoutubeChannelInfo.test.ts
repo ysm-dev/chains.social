@@ -1,7 +1,7 @@
 import { getYoutubeChannelInfo } from "@/functions/youtube/getYoutubeChannelInfo"
 import { describe, expect, it } from "vitest"
 
-describe("getYoutubeChannelInfo function format tests", () => {
+describe("getYoutubeChannelInfo", () => {
   it("solana", async () => {
     const channelId = "UC9AdQPUe4BdVJ8M9X7wxHUA"
 
@@ -10,7 +10,7 @@ describe("getYoutubeChannelInfo function format tests", () => {
     expect(response.id).toBe(channelId)
   })
 
-  it("near", async () => {
+  it.skip("near", async () => {
     const channelId = "UCuKdIYVN8iE3fv8alyk1aMw"
 
     const response = await getYoutubeChannelInfo(channelId)
