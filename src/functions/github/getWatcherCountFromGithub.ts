@@ -1,5 +1,4 @@
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
-import { getLastSegment } from "@/utils/getLastSegment"
 
 export const getWatcherCountFromGithub = async (
   githubRepositoryLink: string,

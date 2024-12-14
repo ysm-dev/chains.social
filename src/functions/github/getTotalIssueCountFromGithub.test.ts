@@ -9,4 +9,12 @@ describe("getTotalIssueCountFromGithub", () => {
 
     expect(response).toBeGreaterThan(0)
   })
+
+  it("ton-blockchain", async () => {
+    const githubRepositoryUrl = "https://github.com/ton-blockchain/ton"
+
+    const response = await getTotalIssueCountFromGithub(githubRepositoryUrl)
+
+    expect(response).toBeGreaterThan(0)
+  })
 })

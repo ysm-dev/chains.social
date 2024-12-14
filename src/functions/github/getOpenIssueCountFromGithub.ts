@@ -1,5 +1,6 @@
 import { env } from "@/lib/env"
 import { ofetch } from "@/lib/ofetch"
+import { z } from "zod"
 
 export const getOpenIssueCountFromGithub = async (
   githubRepositoryLink: string,
@@ -21,7 +22,11 @@ export const getOpenIssueCountFromGithub = async (
     },
   })
 
-  const { total_count } = response
+  const { total_count } = getOpenIssueCountFromGithubSchema.parse(response)
 
   return total_count
 }
+
+const getOpenIssueCountFromGithubSchema = z.object({
+  total_count: z.number(),
+})
