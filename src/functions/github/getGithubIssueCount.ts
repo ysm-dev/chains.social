@@ -18,7 +18,6 @@ export const getGithubIssueCount = memoize(
           },
         },
       },
-      parseResponse: JSON.parse,
     })
 
     const { data } = getTotalIssueCountFromGithubSchema.parse(response)

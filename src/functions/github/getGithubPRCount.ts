@@ -19,7 +19,6 @@ export const getGithubPRCount = async (
         },
       },
     },
-    parseResponse: JSON.parse,
   })
 
   const { data } = getTotalIssueCountFromGithubSchema.parse(response)

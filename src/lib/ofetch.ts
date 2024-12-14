@@ -1,4 +1,5 @@
 import { PROXY_URL } from "@/lib/env"
+import destr from "destr"
 import type { FetchOptions, FetchRequest, ResponseType } from "ofetch"
 import { ofetch as fetch } from "ofetch"
 
@@ -7,9 +8,9 @@ export const ofetch = async <T = any, R extends ResponseType = "json">(
   options?: FetchOptions<R>,
 ) => {
   const response = await fetch.raw<T, R>(request, {
-    ...options,
     ignoreResponseError: true,
-    parseResponse: JSON.parse,
+    parseResponse: destr,
+    ...options,
   })
 
   if (response.status === 403 || response.status === 429) {

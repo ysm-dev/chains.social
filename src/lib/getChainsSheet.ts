@@ -1,5 +1,5 @@
+import { ofetch } from "@/lib/ofetch"
 import { map, pipe, toArray } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getChainsSheet = async () => {
@@ -13,9 +13,9 @@ export const getChainsSheet = async () => {
     },
   )
 
-  const rows = csvText.split("\n").map((row) => row.split(","))
+  const rows = csvText?.split("\n").map((row) => row.split(","))
 
-  if (rows.length < 2) {
+  if (!rows || rows.length < 2) {
     throw new Error("No data found in the spreadsheet.")
   }
 
