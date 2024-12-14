@@ -1,6 +1,6 @@
 import { env } from "@/lib/env"
+import { ofetch } from "@/lib/ofetch"
 import { memoize } from "@fxts/core"
-import { ofetch } from "ofetch"
 import type { aC } from "vitest/dist/chunks/reporters.D7Jzd9GS.js"
 import { z } from "zod"
 

@@ -1,4 +1,5 @@
 import { env } from "@/lib/env"
+import { ofetch } from "@/lib/ofetch"
 import {
   flat,
   map,
@@ -9,7 +10,6 @@ import {
   toArray,
   toAsync,
 } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 /*

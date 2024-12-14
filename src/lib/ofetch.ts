@@ -20,5 +20,9 @@ export const ofetch = async <T = any, R extends ResponseType = "json">(
     return data
   }
 
+  if (response.status === 404) {
+    return null
+  }
+
   return response._data
 }

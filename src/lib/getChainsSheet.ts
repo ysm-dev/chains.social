@@ -1,5 +1,5 @@
+import { ofetch } from "@/lib/ofetch"
 import { map, pipe, toArray } from "@fxts/core"
-import { ofetch } from "ofetch"
 import { z } from "zod"
 
 export const getChainsSheet = async () => {
