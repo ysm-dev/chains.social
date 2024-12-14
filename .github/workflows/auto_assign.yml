@@ -1,0 +1,12 @@
+name: Auto Assign
+
+on:
+  pull_request:
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ohnogumi/assign-reviewers@main
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
