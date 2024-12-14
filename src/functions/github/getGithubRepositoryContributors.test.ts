@@ -1,5 +1,5 @@
 import { getGithubRepositoryContributors } from "@/functions/github/getGithubRepositoryContributors"
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 
 describe("getGithubRepositoryContributors function format tests", () => {
   it("should match the expected response format", async () => {

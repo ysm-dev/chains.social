@@ -1,5 +1,6 @@
 import { env } from "@/lib/env"
 import { ofetch } from "@/lib/ofetch"
+import { z } from "zod"
 
 export const getTotalPRCountFromGithub = async (
   githubRepositoryLink: string,
@@ -21,7 +22,11 @@ export const getTotalPRCountFromGithub = async (
     },
   })
 
-  const { total_count } = response
+  const { total_count } = getTotalPRCountFromGithubSchema.parse(response)
 
   return total_count
 }
+
+const getTotalPRCountFromGithubSchema = z.object({
+  total_count: z.number(),
+})
