@@ -30,7 +30,7 @@ export const getTelegramGroupChatInfo = memoize(async (slug: string) => {
       .textContent!.replace(" subscribers", "")
       .replace(" ", "")
 
-    return { subscriberCount }
+    return { memberCount: subscriberCount, onlineCount: null }
   }
 
   throw new Error("Unknown type")
