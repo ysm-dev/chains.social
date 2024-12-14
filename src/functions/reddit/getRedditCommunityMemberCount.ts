@@ -1,7 +1,7 @@
 import { PROXY_URL } from "@/lib/env"
-import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
+import { ofetch } from "ofetch"
 
 export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
   const html = await ofetch(`${PROXY_URL}/https://reddit.com/r/${slug}`, {
