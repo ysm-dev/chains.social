@@ -1,42 +1,43 @@
 import { env } from "@/lib/env"
 import { ofetch } from "@/lib/ofetch"
+import { getLastSegment } from "@/utils/getLastSegment"
 import { z } from "zod"
 
-export const getLastVideoDateFromYoutube = async (youtubeChannelId: string) => {
-  const response = await ofetch<getYoutubeChannelVideoResponse>(
-    `https://api.subscribercounter.com/video/all/${youtubeChannelId}`,
+export const getLastVideoDateFromYoutube = async (youtubeLink: string) => {
+  const channelId = getLastSegment(youtubeLink)
+
+  const response = await ofetch<GetLastVideoDateFromYoutubeResponse>(
+    `https://www.googleapis.com/youtube/v3/search`,
     {
-      headers: {
-        authorization: `Basic ${env.COUNT_API_KEY}`,
-        origin: "https://subscribercounter.com",
+      query: {
+        part: "snippet",
+        channelId: channelId,
+        order: "date",
+        maxResults: 1,
+        key: env.YOUTUBE_DATA_API_KEY,
       },
     },
   )
 
-  console.log(JSON.stringify(response, null, 2))
-
-  const { data } = getYoutubeChannelVideoSchema.parse(response)
+  const data = getLastVideoDateFromYoutubeSchema.parse(response)
 
   const { publishedAt } = data.items[0].snippet
 
   return new Date(publishedAt).toISOString()
 }
 
-export const getYoutubeChannelVideoSchema = z.object({
-  success: z.boolean(),
-  data: z.object({
-    items: z
-      .array(
-        z.object({
-          snippet: z.object({
-            publishedAt: z.string(),
-          }),
+const getLastVideoDateFromYoutubeSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        snippet: z.object({
+          publishedAt: z.string(),
         }),
-      )
-      .min(1),
-  }),
+      }),
+    )
+    .min(1),
 })
 
-export type getYoutubeChannelVideoResponse = z.infer<
-  typeof getYoutubeChannelVideoSchema
+export type GetLastVideoDateFromYoutubeResponse = z.infer<
+  typeof getLastVideoDateFromYoutubeSchema
 >

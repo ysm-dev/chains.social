@@ -76,9 +76,9 @@ async function main() {
         closedIssueCount,
         lastWeekDownloadCount,
         lastDayDownloadCount,
-        viewCount,
-        videoCount,
-        subscriberCount,
+        // viewCount,
+        // videoCount,
+        // subscriberCount,
         xFollowerCount,
         xFollowingCount,
         telegramMemberCount,
@@ -141,15 +141,15 @@ async function main() {
           data.npmUrl
             ? getLastDayDownloadCountFromNpm(data.npmUrl)
             : Promise.resolve(null),
-          data.youtubeChannelId
-            ? getViewCountFromYoutube(data.youtubeChannelId)
-            : Promise.resolve(null),
-          data.youtubeChannelId
-            ? getVideoCountFromYoutube(data.youtubeChannelId)
-            : Promise.resolve(null),
-          data.youtubeChannelId
-            ? getSubscriberCountFromYoutube(data.youtubeChannelId)
-            : Promise.resolve(null),
+          // data.youtubeChannelId
+          //   ? getViewCountFromYoutube(data.youtubeChannelId)
+          //   : Promise.resolve(null),
+          // data.youtubeChannelId
+          //   ? getVideoCountFromYoutube(data.youtubeChannelId)
+          //   : Promise.resolve(null),
+          // data.youtubeChannelId
+          //   ? getSubscriberCountFromYoutube(data.youtubeChannelId)
+          //   : Promise.resolve(null),
           data.xUrl ? getFollowerCountFromX(data.xUrl) : Promise.resolve(null),
           data.xUrl ? getFollowingCountFromX(data.xUrl) : Promise.resolve(null),
           data.telegramUrl
@@ -201,7 +201,7 @@ async function main() {
         latestReleaseName,
         lastReleaseDate,
         lastReleaseVersion,
-        lastVideoDate,
+        // lastVideoDate,
         lastPostDate,
         redditLastPostDate,
         lastCastDate,
@@ -224,9 +224,9 @@ async function main() {
           data.npmUrl
             ? getLastReleaseVersionFromNpm(data.npmUrl)
             : Promise.resolve(null),
-          data.youtubeChannelId
-            ? getLastVideoDateFromYoutube(data.youtubeChannelId)
-            : Promise.resolve(null),
+          // data.youtubeChannelId
+          //   ? getLastVideoDateFromYoutube(data.youtubeChannelId)
+          //   : Promise.resolve(null),
           data.xUrl ? getLastPostDateFromX(data.xUrl) : Promise.resolve(null),
           data.redditUrl
             ? getLastPostDateFromReddit(data.redditUrl)
@@ -284,12 +284,12 @@ async function main() {
           lastReleaseDate,
           lastReleaseVersion,
         },
-        youtube: {
-          viewCount,
-          videoCount,
-          subscriberCount,
-          lastVideoDate,
-        },
+        // youtube: {
+        //   viewCount,
+        //   videoCount,
+        //   subscriberCount,
+        //   lastVideoDate,
+        // },
         x: {
           followerCount: xFollowerCount,
           followingCount: xFollowingCount,
