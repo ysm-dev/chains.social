@@ -2,12 +2,10 @@ name: Auto Assign
 
 on:
   pull_request:
+    types: [opened, ready_for_review]
 
 jobs:
-  auto-assign:
+  add-reviews:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: ohnogumi/assign-reviewers@v0.0.5
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: kentaro-m/auto-assign-action@master

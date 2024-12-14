@@ -1,0 +1,9 @@
+addReviewers: true
+addAssignees: true
+
+reviewers:
+  - ysm-dev
+  - octave08
+  - copilot
+
+numberOfReviewers: 2
