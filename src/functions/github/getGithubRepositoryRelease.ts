@@ -15,7 +15,6 @@ export const getGithubRepositoryRelease = memoize(
         headers: {
           Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
         },
-        ignoreResponseError: true,
       },
     )
 
