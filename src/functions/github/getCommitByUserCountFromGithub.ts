@@ -1,12 +1,12 @@
 import { getGithubRepositoryContributors } from "@/functions/github/getGithubRepositoryContributors"
-import { getLastSegment } from "@/utils/getLastSegment"
+import { githubRepoURLSchema } from "@/validators/github"
 
 export const getCommitByUserCountFromGithub = async (
-  githubRepositoryLink: string,
+  githubRepositoryUrl: string,
 ) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const response = await getGithubRepositoryContributors(
     organizationName,

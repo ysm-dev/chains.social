@@ -9,6 +9,7 @@ export const ofetch = async <T = any, R extends ResponseType = "json">(
   const response = await fetch.raw<T, R>(request, {
     ...options,
     ignoreResponseError: true,
+    parseResponse: JSON.parse,
   })
 
   if (response.status === 403 || response.status === 429) {

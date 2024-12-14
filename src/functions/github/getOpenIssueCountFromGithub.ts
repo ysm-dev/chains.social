@@ -1,32 +1,16 @@
-import { env } from "@/lib/env"
-import { ofetch } from "@/lib/ofetch"
-import { z } from "zod"
+import { getGithubIssueCount } from "@/functions/github/getGithubIssueCount"
+import { githubRepoURLSchema } from "@/validators/github"
 
 export const getOpenIssueCountFromGithub = async (
-  githubRepositoryLink: string,
+  githubRepositoryUrl: string,
 ) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
-  const response = await ofetch<{
-    total_count: number
-  }>(`https://api.github.com/search/issues`, {
-    query: {
-      q: `repo:${organizationName}/${repositoryName} is:issue is:open`,
-      page: 1,
-      per_page: 1,
-    },
-    headers: {
-      Authorization: `Bearer ${env.GITHUBPAT_TOKEN}`,
-    },
-  })
+  const { openIssueCount } = await getGithubIssueCount(
+    repositoryName,
+    organizationName,
+  )
 
-  const { total_count } = getOpenIssueCountFromGithubSchema.parse(response)
-
-  return total_count
+  return openIssueCount
 }
-
-const getOpenIssueCountFromGithubSchema = z.object({
-  total_count: z.number(),
-})
