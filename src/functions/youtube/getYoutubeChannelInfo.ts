@@ -1,4 +1,4 @@
-import { env } from "@/lib/env"
+import { COUNT_API_KEY, env } from "@/lib/env"
 import { memoize } from "@fxts/core"
 import { ofetch } from "ofetch"
 import { z } from "zod"
@@ -12,7 +12,7 @@ export const getYoutubeChannelInfo = memoize(async (channelId: string) => {
     `https://api.subcount.app/channel/info/${channelId}`,
     {
       headers: {
-        authorization: `Basic ${env.COUNT_API_KEY}`,
+        authorization: `Basic ${COUNT_API_KEY}`,
         origin: "https://subscribercounter.com",
       },
     },
