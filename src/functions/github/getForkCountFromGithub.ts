@@ -1,10 +1,9 @@
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
-import { getLastSegment } from "@/utils/getLastSegment"
+import { githubRepoURLSchema } from "@/validators/github"
 
-export const getForkCountFromGithub = async (githubRepositoryLink: string) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+export const getForkCountFromGithub = async (githubRepositoryUrl: string) => {
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const response = await getGithubRepositoryInfo(
     organizationName,

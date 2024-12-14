@@ -1,12 +1,12 @@
 import { getGithubRepositoryBranch } from "@/functions/github/getGithubRepositoryBranch"
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
+import { githubRepoURLSchema } from "@/validators/github"
 
 export const getLastCommitDateFromGithub = async (
-  githubRepositoryLink: string,
+  githubRepositoryUrl: string,
 ) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const { default_branch } = await getGithubRepositoryInfo(
     organizationName,

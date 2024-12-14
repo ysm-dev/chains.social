@@ -1,11 +1,11 @@
 import { getGithubRepositoryRelease } from "@/functions/github/getGithubRepositoryRelease"
+import { githubRepoURLSchema } from "@/validators/github"
 
 export const getLatestReleaseDateFromGithub = async (
-  githubRepositoryLink: string,
+  githubRepositoryUrl: string,
 ) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const data = await getGithubRepositoryRelease(
     organizationName,

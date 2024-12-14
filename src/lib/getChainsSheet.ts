@@ -13,9 +13,9 @@ export const getChainsSheet = async () => {
     },
   )
 
-  const rows = csvText.split("\n").map((row) => row.split(","))
+  const rows = csvText?.split("\n").map((row) => row.split(","))
 
-  if (rows.length < 2) {
+  if (!rows || rows.length < 2) {
     throw new Error("No data found in the spreadsheet.")
   }
 

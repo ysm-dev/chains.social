@@ -1,11 +1,11 @@
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
+import { githubRepoURLSchema } from "@/validators/github"
 
 export const getWatcherCountFromGithub = async (
-  githubRepositoryLink: string,
+  githubRepositoryUrl: string,
 ) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const response = await getGithubRepositoryInfo(
     organizationName,

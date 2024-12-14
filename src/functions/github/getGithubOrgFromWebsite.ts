@@ -1,6 +1,6 @@
+import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
 import { filter, map, pipe, toArray, uniq } from "@fxts/core"
-import { ofetch } from "ofetch"
 
 export const getGithubOrgFromWebsite = async (url: string) => {
   const html = await ofetch<string>(url, { parseResponse: (txt) => txt })

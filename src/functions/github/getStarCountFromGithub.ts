@@ -1,9 +1,9 @@
 import { getGithubRepositoryInfo } from "@/functions/github/getGithubRepositoryInfo"
+import { githubRepoURLSchema } from "@/validators/github"
 
-export const getStarCountFromGithub = async (githubRepositoryLink: string) => {
-  const [repositoryName, organizationName] = githubRepositoryLink
-    .split("/")
-    .reverse()
+export const getStarCountFromGithub = async (githubRepositoryUrl: string) => {
+  const validUrl = githubRepoURLSchema.parse(githubRepositoryUrl)
+  const [repositoryName, organizationName] = validUrl.split("/").reverse()
 
   const response = await getGithubRepositoryInfo(
     organizationName,

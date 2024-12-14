@@ -1,4 +1,3 @@
-import { getMetadataFromCMC } from "@/functions/coinmarketcap/getMetadataFromCMC"
 import { getTelegramGroupChatInfo } from "@/functions/telegram/getTelegramGroupChatInfo"
 import { describe, expect, it } from "vitest"
 
