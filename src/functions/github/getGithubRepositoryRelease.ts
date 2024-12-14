@@ -18,6 +18,10 @@ export const getGithubRepositoryRelease = memoize(
       },
     )
 
+    if (!response) {
+      return null
+    }
+
     return getGithubRepositoryReleaseSchema.parse(response)
   },
 )
