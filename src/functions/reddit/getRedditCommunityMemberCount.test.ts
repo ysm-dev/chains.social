@@ -8,8 +8,14 @@ describe("getRedditCommunityMemberCount", () => {
     expect(memberCount).toBeGreaterThan(0)
   })
 
-  it("polkadot", async () => {
+  it.skip("polkadot", async () => {
     const memberCount = await getRedditCommunityMemberCount("Polkadot")
+
+    expect(memberCount).toBeGreaterThan(0)
+  })
+
+  it("worldcoid", async () => {
+    const memberCount = await getRedditCommunityMemberCount("worldcoin")
 
     expect(memberCount).toBeGreaterThan(0)
   })
