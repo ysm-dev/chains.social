@@ -1,17 +1,16 @@
-import { PROXY_URL } from "@/lib/env"
 import { ofetch } from "@/lib/ofetch"
 import { getDocument } from "@/utils/getDocument"
 import { memoize } from "@fxts/core"
 
 export const getRedditCommunityMemberCount = memoize(async (slug: string) => {
-  const html = await ofetch(`${PROXY_URL}/https://reddit.com/r/${slug}`, {
+  const html = await ofetch(`https://reddit.com/r/${slug}`, {
     parseResponse: (txt) => txt,
   })
 
   const document = getDocument(html)
 
-  const targetH1 = Array.from(document.querySelectorAll("h1")).find(
-    (h1) => h1.textContent.trim() === `r/${slug}`,
+  const targetH1 = Array.from(document.querySelectorAll("h1")).find((h1) =>
+    h1.textContent.trim().includes(`r/${slug}`),
   )
 
   if (!targetH1 || !targetH1.parentElement) {

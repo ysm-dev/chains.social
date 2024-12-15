@@ -59,7 +59,7 @@ export const getXUserPosts = memoize(async (userId: string) => {
     .find((v) => v.type === "TimelineAddEntries")
     ?.entries.find((v) => v.content.entryType === "TimelineTimelineItem")
 
-  if (!lastPost || !lastPost.content.itemContent) {
+  if (!lastPost?.content.itemContent?.tweet_results.result.legacy?.created_at) {
     throw new Error("No tweets found")
   }
 
@@ -96,10 +96,12 @@ const getXUserTweetsSchema = z.object({
                               tweet_results: z.object({
                                 result: z.object({
                                   __typename: z.string(),
-                                  rest_id: z.string(),
-                                  legacy: z.object({
-                                    created_at: z.string(),
-                                  }),
+                                  rest_id: z.string().optional(),
+                                  legacy: z
+                                    .object({
+                                      created_at: z.string(),
+                                    })
+                                    .optional(),
                                 }),
                               }),
                             })
