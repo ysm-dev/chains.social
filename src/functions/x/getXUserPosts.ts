@@ -59,11 +59,7 @@ export const getXUserPosts = memoize(async (userId: string) => {
     .find((v) => v.type === "TimelineAddEntries")
     ?.entries.find((v) => v.content.entryType === "TimelineTimelineItem")
 
-  if (
-    !lastPost ||
-    !lastPost.content.itemContent ||
-    !lastPost.content.itemContent.tweet_results.result.legacy?.created_at
-  ) {
+  if (!lastPost?.content.itemContent?.tweet_results.result.legacy?.created_at) {
     throw new Error("No tweets found")
   }
 
