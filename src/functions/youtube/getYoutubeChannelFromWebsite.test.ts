@@ -13,7 +13,7 @@ const tests = [
   },
   {
     website: "thegraph.com",
-    expected: `/@GraphProtocol`,
+    expected: `/c/GraphProtocol`,
   },
   {
     website: "sui.io",
