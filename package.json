@@ -5,7 +5,7 @@
   "engines": {
     "node": ">= 22"
   },
-  "packageManager": "bun@1.1.38",
+  "packageManager": "bun@1.1.42",
   "scripts": {
     "dev": "bun tsx src/main.ts",
     "test": "vitest",
@@ -31,7 +31,7 @@
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "taze": "^0.18.0",
     "typescript": "^5.7.2",
-    "unstorage": "^1.13.1",
+    "unstorage": "^1.14.1",
     "vitest": "^2.1.8",
     "zod": "^3.24.1"
   }
