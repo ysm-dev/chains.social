@@ -23,7 +23,7 @@
     "@vitest/coverage-v8": "^2.1.8",
     "destr": "^2.0.3",
     "dotenv": "^16.4.7",
-    "happy-dom": "^16.0.1",
+    "happy-dom": "^16.3.0",
     "ms": "^3.0.0-canary.1",
     "ofetch": "^1.4.1",
     "playwright": "^1.49.1",
